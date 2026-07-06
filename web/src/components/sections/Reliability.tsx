@@ -104,6 +104,7 @@ export function Reliability() {
     <section ref={rootRef} className="relative bg-white py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-12 sm:gap-16 lg:gap-20">
         <SectionHeading
+          eyebrow="The Network"
           title="Built for Consistent Connectivity"
           subtitle="Behind every connection is a network engineered for predictable performance — day and night, peak hours included."
         />

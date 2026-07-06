@@ -1,6 +1,5 @@
 import { Navbar } from "./components/sections/Navbar";
 import { Hero } from "./components/sections/Hero";
-import { Stats } from "./components/sections/Stats";
 import { Plans } from "./components/sections/Plans";
 import { WhyChooseUs } from "./components/sections/WhyChooseUs";
 import { Reliability } from "./components/sections/Reliability";
@@ -17,7 +16,6 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Stats />
         <Plans />
         <WhyChooseUs />
         <Reliability />

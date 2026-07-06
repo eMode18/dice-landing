@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Reveal } from "../Reveal";
 
 interface SectionHeadingProps {
+  eyebrow?: string;
   title: ReactNode;
   subtitle?: ReactNode;
   align?: "left" | "center";
@@ -10,6 +11,7 @@ interface SectionHeadingProps {
 }
 
 export function SectionHeading({
+  eyebrow,
   title,
   subtitle,
   align = "center",
@@ -23,6 +25,18 @@ export function SectionHeading({
     <div
       className={`flex flex-col gap-4 sm:gap-5 ${isCenter ? "items-center text-center" : "items-start text-left"} ${className}`}
     >
+      {eyebrow && (
+        <Reveal>
+          <span
+            className={`inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] ${
+              isLight ? "text-white/60" : "text-dice-blue dark:text-dice-cyan"
+            }`}
+          >
+            <span className="h-px w-6 bg-current" />
+            {eyebrow}
+          </span>
+        </Reveal>
+      )}
       <Reveal delay={0.08}>
         <h2
           className={`max-w-3xl text-[2rem] leading-[1.12] font-semibold sm:text-4xl lg:text-[2.75rem] xl:text-5xl ${

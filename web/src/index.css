@@ -12,9 +12,9 @@
   --color-dice-mist: #f8fafc;
   --color-dice-cyan: #5ec8ff;
 
-  --font-display: "Space Grotesk", "Poppins", sans-serif;
-  --font-heading: "Poppins", "Space Grotesk", sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
 
   --animate-float: float 7s ease-in-out infinite;
   --animate-spin-slow: spin 22s linear infinite;
@@ -53,7 +53,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 
 ::selection {

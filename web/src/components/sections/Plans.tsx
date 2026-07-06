@@ -13,6 +13,7 @@ export function Plans() {
 
       <Container className="flex flex-col gap-12 sm:gap-16 lg:gap-20">
         <SectionHeading
+          eyebrow="Pricing"
           title="Choose Your Plan"
           subtitle="Flexible internet plans for every lifestyle — pick one in seconds, upgrade or cancel anytime."
         />
@@ -24,7 +25,7 @@ export function Plans() {
                 className={`group relative flex h-full flex-col gap-7 overflow-hidden rounded-[28px] border px-7 py-9 transition-all duration-400 hover:-translate-y-2 sm:px-8 ${
                   plan.popular
                     ? "border-dice-blue/30 bg-linear-to-b from-dice-dark to-[#062a6b] text-white shadow-[0_36px_90px_-28px_rgba(0,102,255,0.55)]"
-                    : "glass border-slate-200/70 text-dice-ink shadow-[0_22px_60px_-30px_rgba(10,61,145,0.35)] hover:border-dice-blue/30 hover:shadow-[0_36px_90px_-28px_rgba(0,102,255,0.3)] dark:text-white dark:shadow-[0_22px_60px_-30px_rgba(0,0,0,0.5)]"
+                    : "border-slate-200/80 bg-white text-dice-ink hover:border-dice-blue/30 hover:shadow-[0_22px_60px_-20px_rgba(0,102,255,0.2)] dark:border-white/10 dark:bg-white/5 dark:text-white"
                 }`}
               >
                 {plan.popular && (

@@ -64,6 +64,7 @@ export function FAQ() {
     <section id="faq" className="relative bg-white py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
       <Container className="mx-auto flex max-w-3xl flex-col gap-12 sm:gap-16">
         <SectionHeading
+          eyebrow="Support"
           title="Questions? We've Got Answers"
           subtitle="Everything you need to know about getting connected, staying secure, and managing your plan."
         />
