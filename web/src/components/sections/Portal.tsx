@@ -103,11 +103,11 @@ export function Portal() {
           </Reveal>
         </div>
 
-        {/* Right: 3 phone mockups */}
-        <div className="order-1 flex items-start justify-center lg:order-2">
+        {/* Right: 3 phone mockups — swipeable carousel on mobile, fan on desktop */}
+        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto px-10 pb-4 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
 
           {/* Screen 1 — Plan selection */}
-          <div data-phone className="relative z-10 -rotate-6">
+          <div data-phone className="relative z-10 shrink-0 snap-center lg:-rotate-6">
             <div className="absolute -inset-12 -z-10 rounded-full bg-dice-blue/10 blur-3xl" />
             <PhoneFrame>
               <p className="mb-1 text-[11px] font-medium text-white/50">Welcome to</p>
@@ -143,7 +143,7 @@ export function Portal() {
           </div>
 
           {/* Screen 2 — Return user login */}
-          <div data-phone className="relative z-20 -ml-14 mt-8 rotate-2 sm:-ml-16 sm:mt-10">
+          <div data-phone className="relative z-20 shrink-0 snap-center lg:-ml-16 lg:mt-10 lg:rotate-2">
             <PhoneFrame>
               <p className="mb-1 text-[11px] font-medium text-white/50">Welcome back</p>
               <p className="mb-4 font-display text-base font-bold text-white">Sign In to Connect</p>
@@ -170,7 +170,7 @@ export function Portal() {
           </div>
 
           {/* Screen 3 — Active session */}
-          <div data-phone className="relative z-10 -ml-14 mt-16 rotate-6 sm:-ml-16 sm:mt-20">
+          <div data-phone className="relative z-10 shrink-0 snap-center lg:-ml-16 lg:mt-20 lg:rotate-6">
             <PhoneFrame>
               <p className="mb-1 text-[11px] font-medium text-white/50">Wanjiru Kamau</p>
 
