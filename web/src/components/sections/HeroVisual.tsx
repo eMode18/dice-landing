@@ -69,7 +69,7 @@ function generateMpesaCode() {
   return Array.from({ length: 10 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
-function StatusBar({ time }: { time: string }) {
+function StatusBar({ time, wifiConnected }: { time: string; wifiConnected: boolean }) {
   return (
     <div className="relative flex items-center justify-between px-6 pt-3.5 text-[10px] font-semibold text-white/85">
       <span>{time}</span>
@@ -81,7 +81,11 @@ function StatusBar({ time }: { time: string }) {
             <span key={h} className="w-[2.5px] rounded-sm bg-white/85" style={{ height: h }} />
           ))}
         </span>
-        <span className="text-[8.5px] tracking-wide">LTE</span>
+        {wifiConnected ? (
+          <Icon name="wifi" className="h-3 w-3 text-white/85" />
+        ) : (
+          <span className="text-[8.5px] tracking-wide">LTE</span>
+        )}
         <span className="relative h-[9px] w-[17px] rounded-[3px] border border-white/60">
           <span className="absolute inset-[1.5px] right-[4px] rounded-[1px] bg-white/85" />
           <span className="absolute -right-[3px] top-1/2 h-[4px] w-[2px] -translate-y-1/2 rounded-r-sm bg-white/60" />
@@ -346,6 +350,9 @@ export function HeroVisual() {
           ))}
         </div>
 
+        {/* Clean single-tone stage behind phone (replaces busy overlapping blobs) */}
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.9),rgba(255,255,255,0)_72%)] dark:bg-[radial-gradient(closest-side,rgba(94,200,255,0.12),transparent_72%)]" />
+
         {/* Glow behind phone */}
         <div
           className={`pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl transition-opacity duration-700 ${
@@ -355,11 +362,14 @@ export function HeroVisual() {
 
         {/* ── Phone: upright + viewport-height on mobile, 3D slant from lg up ── */}
         <div className="relative w-[min(76vw,300px)] sm:w-[350px] xl:w-[385px] lg:[transform:rotateX(3deg)_rotateY(-24deg)_rotateZ(6deg)_translateZ(40px)]">
+          {/* Grounded contact shadow — keeps the phone from looking like it floats */}
+          <div className="pointer-events-none absolute inset-x-[8%] -bottom-4 h-8 rounded-[100%] bg-black/35 blur-xl dark:bg-black/60" />
+
           <div
             className="overflow-hidden rounded-[2.9rem] bg-[#151515] p-[3px] shadow-[0_45px_90px_-25px_rgba(0,0,0,0.85),inset_0_0.5px_0_rgba(255,255,255,0.12)] lg:shadow-[10px_8px_0_0_#050505,12px_10px_0_0_#2a2a2a,0_55px_110px_-20px_rgba(0,0,0,0.9),inset_0_0.5px_0_rgba(255,255,255,0.12)]"
           >
             <div className="relative overflow-hidden rounded-[2.7rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
-              <StatusBar time={clock} />
+              <StatusBar time={clock} wifiConnected={phase === "connecting" || phase === "connected"} />
 
               {/* Screen stage */}
               <div className="relative flex min-h-[max(380px,52svh)] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">
