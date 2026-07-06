@@ -11,6 +11,10 @@ export function HeroVisual() {
       if (!sceneRef.current) return;
       const scene = sceneRef.current;
 
+      // Set perspective and rotation origin upfront so the first hover
+      // doesn't pop the translateZ children by applying perspective mid-flight
+      gsap.set(scene, { transformPerspective: 1000, rotateX: 0, rotateY: 0 });
+
       gsap.fromTo(
         scene,
         { opacity: 0, scale: 0.92, y: 36 },
