@@ -14,7 +14,7 @@ const legal = ["Privacy Policy", "Terms of Service"];
 export function Footer() {
   return (
     <footer id="footer-contact" className="relative isolate overflow-hidden bg-dice-ink pt-20 sm:pt-24">
-      <div className="absolute inset-0 -z-10 bg-linear-to-b from-[#0a3d91]/40 via-dice-ink to-dice-ink" />
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-dice-dark/40 via-dice-ink to-dice-ink" />
       <div className="pointer-events-none absolute -left-32 top-10 -z-10 h-72 w-72 rounded-full bg-dice-blue/20 blur-[120px]" />
 
       <Container>
@@ -22,7 +22,7 @@ export function Footer() {
           {/* Column 1 — Company info */}
           <div className="flex flex-col gap-5">
             <a href="#home" className="flex items-center">
-              <img src="/logo.png" alt="Dice Ltd." className="h-12 w-auto brightness-0 invert sm:h-14" />
+              <img src="/logo.png" alt="Dice WiFi" className="h-12 w-auto brightness-0 invert sm:h-14" />
             </a>
             <p className="max-w-xs text-sm leading-relaxed text-white/60">
               Premium WiFi hotspot subscriptions delivering fast, reliable, and secure internet
@@ -83,7 +83,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-7 text-xs text-white/50 sm:flex-row sm:text-sm">
-          <p>&copy; {new Date().getFullYear()} Dice Ltd. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Dice WiFi All rights reserved.</p>
           <div className="flex items-center gap-6">
             {legal.map((item) => (
               <a key={item} href="#" className="transition-colors hover:text-dice-cyan">

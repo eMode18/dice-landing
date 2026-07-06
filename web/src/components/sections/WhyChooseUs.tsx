@@ -9,7 +9,7 @@ export function WhyChooseUs() {
     <section id="features" className="relative bg-dice-mist py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-14 sm:gap-18 lg:gap-22">
         <SectionHeading
-          title="Why Thousands Trust Dice Ltd."
+          title="Why Thousands Trust Dice WiFi"
           subtitle="We obsess over the details that make getting online effortless: speed, simplicity, and security."
           align="left"
         />

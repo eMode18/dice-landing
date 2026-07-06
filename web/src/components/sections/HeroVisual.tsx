@@ -11,8 +11,6 @@ export function HeroVisual() {
       if (!sceneRef.current) return;
       const scene = sceneRef.current;
 
-      // Set perspective and rotation origin upfront so the first hover
-      // doesn't pop the translateZ children by applying perspective mid-flight
       gsap.set(scene, { transformPerspective: 1000, rotateX: 0, rotateY: 0 });
 
       gsap.fromTo(
@@ -53,8 +51,8 @@ export function HeroVisual() {
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
         gsap.to(scene, {
-          rotateY: px * 6,
-          rotateX: -py * 6,
+          rotateY: px * 5,
+          rotateX: -py * 5,
           duration: 0.6,
           ease: "power2.out",
           transformPerspective: 1000,
@@ -93,37 +91,37 @@ export function HeroVisual() {
         </div>
 
         {/* Glow behind phone */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(94,200,255,0.35),transparent_70%)] blur-2xl" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(94,200,255,0.3),transparent_70%)] blur-2xl" />
 
-        {/* Phone mockup showing captive portal */}
+        {/* ── 3D phone mockup ── */}
         <div
-          className="relative w-[240px] sm:w-[270px]"
-          style={{ transform: "translateZ(60px)" }}
+          className="relative w-[290px] sm:w-[345px]"
+          style={{
+            transform: "rotateX(8deg) rotateY(-22deg) rotateZ(-3deg) translateZ(40px)",
+          }}
         >
-          <div className="overflow-hidden rounded-[3rem] bg-[#0a1a3f] p-[3px] shadow-[0_40px_90px_-20px_rgba(5,16,38,0.6),0_0_0_1px_rgba(255,255,255,0.1)]">
-            <div className="overflow-hidden rounded-[2.8rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
-              {/* Status bar */}
-              <div className="flex items-center justify-between px-6 pb-2 pt-6">
-                <span className="text-xs font-semibold text-white/70">9:41</span>
-                <div className="flex items-center gap-2">
-                  <div className="flex items-end gap-px">
-                    {[4, 6, 8, 10].map((h, i) => (
-                      <span
-                        key={i}
-                        className="w-[3px] rounded-sm bg-white/60"
-                        style={{ height: `${h}px` }}
-                      />
-                    ))}
-                  </div>
-                  <Icon name="wifi" className="h-3.5 w-3.5 text-white/60" />
-                </div>
+          {/* Chassis with visible right/bottom edge via box-shadow */}
+          <div
+            className="overflow-hidden rounded-[3rem] bg-[#111]"
+            style={{
+              padding: "4px",
+              boxShadow:
+                "13px 10px 0 0 #060606, 0 55px 110px -20px rgba(0,0,0,0.9), inset 0 0.5px 0 rgba(255,255,255,0.08)",
+            }}
+          >
+            {/* Screen */}
+            <div className="overflow-hidden rounded-[2.75rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
+
+              {/* Dynamic island */}
+              <div className="flex justify-center pb-1 pt-[22px]">
+                <div className="h-[22px] w-[90px] rounded-full bg-black" />
               </div>
 
-              {/* Portal content */}
+              {/* Captive portal content */}
               <div className="px-5 pb-8 pt-4">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-dice-blue shadow-lg shadow-dice-blue/30">
-                    <Icon name="wifi" className="h-4.5 w-4.5 text-white" />
+                    <Icon name="wifi" className="h-[18px] w-[18px] text-white" />
                   </div>
                   <div>
                     <p className="font-display text-base font-bold leading-tight text-white">

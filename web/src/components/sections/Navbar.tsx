@@ -67,8 +67,8 @@ export function Navbar() {
       }`}
     >
       <Container className="flex items-center justify-between py-2">
-        <a href="#home" className="flex items-center" aria-label="Dice Ltd. home">
-          <img src="/logo.png" alt="Dice Ltd." className="h-12 w-auto sm:h-14 dark:brightness-0 dark:invert" />
+        <a href="#home" className="flex items-center" aria-label="Dice WiFi home">
+          <img src="/logo.png" alt="Dice WiFi" className="h-12 w-auto sm:h-14 dark:brightness-0 dark:invert" />
         </a>
 
         <nav className="hidden items-center gap-1 rounded-full border border-slate-200/70 bg-white/60 px-1.5 py-1.5 backdrop-blur-md dark:border-white/10 dark:bg-white/5 lg:flex">
