@@ -28,6 +28,10 @@
     0%, 100% { opacity: 0.55; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.06); }
   }
+  @keyframes connect-fill {
+    from { width: 6%; }
+    to { width: 100%; }
+  }
 }
 
 html {
