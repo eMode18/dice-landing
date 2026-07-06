@@ -20,11 +20,12 @@ type Phase =
 const DEMO_MSISDN = "0712345678";
 
 const socialApps = [
-  { name: "WhatsApp", color: "#22c55e", style: { left: "0%", top: "10%" } },
-  { name: "Instagram", color: "#ec4899", style: { right: "1%", top: "16%" } },
-  { name: "YouTube", color: "#ef4444", style: { left: "3%", bottom: "24%" } },
-  { name: "TikTok", color: "#0f172a", style: { right: "5%", bottom: "36%" } },
-  { name: "Spotify", color: "#10b981", style: { right: "0%", top: "44%" } },
+  { name: "WhatsApp", color: "#22c55e", dark: false, style: { left: "0%", top: "10%" } },
+  { name: "Instagram", color: "#ec4899", dark: false, style: { right: "1%", top: "13%" } },
+  { name: "Spotify", color: "#10b981", dark: false, style: { left: "0%", top: "44%" } },
+  { name: "X", color: "#0f172a", dark: true, style: { right: "0%", top: "42%" } },
+  { name: "YouTube", color: "#ef4444", dark: false, style: { left: "3%", bottom: "22%" } },
+  { name: "TikTok", color: "#161623", dark: true, style: { right: "5%", bottom: "18%" } },
 ] as const;
 
 function SocialGlyph({ name }: { name: (typeof socialApps)[number]["name"] }) {
@@ -50,6 +51,8 @@ function SocialGlyph({ name }: { name: (typeof socialApps)[number]["name"] }) {
       );
     case "TikTok":
       return <path d="M14 4v9.5a3.75 3.75 0 1 1-3-3.674M14 4c.3 2.4 1.8 4.2 4.5 4.5" />;
+    case "X":
+      return <path d="M5 4l14 16M19 4L5 20" />;
     case "Spotify":
       return (
         <>
@@ -310,7 +313,7 @@ export function HeroVisual() {
     <div className="relative mx-auto w-full max-w-[480px] overflow-hidden sm:max-w-140 lg:mx-0 lg:max-w-none lg:overflow-visible">
       <div
         ref={sceneRef}
-        className="relative flex justify-center py-8 sm:py-12 [transform-style:preserve-3d]"
+        className="relative flex justify-center py-5 sm:py-8 [transform-style:preserve-3d]"
       >
         {/* Signal rings behind phone */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 sm:h-72 sm:w-72">
@@ -603,7 +606,11 @@ export function HeroVisual() {
             key={app.name}
             data-social
             aria-hidden={phase !== "connected"}
-            className="absolute flex h-12 w-12 items-center justify-center rounded-2xl opacity-0 shadow-[0_18px_40px_-12px_rgba(5,16,38,0.6)] sm:h-14 sm:w-14"
+            className={`absolute flex h-12 w-12 items-center justify-center rounded-2xl opacity-0 shadow-[0_18px_40px_-12px_rgba(5,16,38,0.6)] sm:h-14 sm:w-14 ${
+              app.dark
+                ? "ring-1 ring-slate-300/60 dark:shadow-[0_0_24px_-4px_rgba(94,200,255,0.45)] dark:ring-white/45"
+                : ""
+            }`}
             style={{ ...app.style, backgroundColor: app.color, transform: "translateZ(85px)" }}
           >
             <svg

@@ -161,7 +161,7 @@ export function Hero() {
     <section
       id="home"
       ref={rootRef}
-      className="relative isolate overflow-hidden bg-dice-mist pb-20 pt-32 dark:bg-dice-ink sm:pb-28 sm:pt-40 lg:pb-32 lg:pt-44"
+      className="relative isolate overflow-hidden bg-dice-mist pb-14 pt-28 dark:bg-dice-ink sm:pb-16 sm:pt-32 lg:pb-20 lg:pt-36"
     >
       {/* ── LIGHT MODE: colored blob base for the glass layer ── */}
       <div className="absolute inset-0 -z-30 dark:hidden">
@@ -198,7 +198,7 @@ export function Hero() {
       {/* Bottom fade into next section */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-linear-to-t from-dice-mist to-transparent dark:from-dice-ink" />
 
-      <Container className="relative grid grid-cols-1 items-center gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
+      <Container className="relative grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
         <div className="flex flex-col items-start gap-6 text-left sm:gap-7">
           <h1 className="font-display max-w-xl text-[2.5rem] leading-[1.08] font-semibold text-dice-ink perspective-midrange dark:text-white sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
             <span data-hero-line className="block">Your WiFi Hotspot.</span>
