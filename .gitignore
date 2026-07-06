@@ -1,0 +1,10 @@
+# Screenshots / dev artifacts (root level only)
+/*.png
+/*.jpg
+/*.jpeg
+
+# Claude internal
+.claude/
+
+# Misc
+prompt.md
