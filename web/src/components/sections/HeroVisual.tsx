@@ -63,10 +63,16 @@ function SocialGlyph({ name }: { name: (typeof socialApps)[number]["name"] }) {
   }
 }
 
-function StatusBar() {
+/* M-Pesa-style confirmation code, e.g. "SGH4K2MNQB" */
+function generateMpesaCode() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  return Array.from({ length: 10 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+}
+
+function StatusBar({ time }: { time: string }) {
   return (
     <div className="relative flex items-center justify-between px-6 pt-3.5 text-[10px] font-semibold text-white/85">
-      <span>12:46</span>
+      <span>{time}</span>
       {/* Dynamic island */}
       <div className="absolute left-1/2 top-2.5 h-[20px] w-[82px] -translate-x-1/2 rounded-full bg-black" />
       <span className="flex items-center gap-1.5">
@@ -91,6 +97,17 @@ export function HeroVisual() {
   const [phoneChars, setPhoneChars] = useState(0);
   const [pinChars, setPinChars] = useState(0);
   const [waCount, setWaCount] = useState(0);
+  const [mpesaCode, setMpesaCode] = useState(generateMpesaCode);
+  const [now, setNow] = useState(() => new Date());
+
+  /* Real device time, refreshed every 15s */
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 15000);
+    return () => clearInterval(t);
+  }, []);
+
+  const clock = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
+  const dateLabel = now.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" });
 
   /* ── The automated script: each phase schedules the next ── */
   useEffect(() => {
@@ -103,6 +120,7 @@ export function HeroVisual() {
         setPhoneChars(0);
         setPinChars(0);
         setWaCount(0);
+        setMpesaCode(generateMpesaCode());
         go("shade", 1600);
         break;
       case "shade":
@@ -335,35 +353,25 @@ export function HeroVisual() {
           } bg-[radial-gradient(closest-side,rgba(94,200,255,0.35),transparent_70%)]`}
         />
 
-        {/* ── 3D phone — slant matched to reference (clockwise lean, right edge visible) ── */}
-        <div
-          className="relative w-[300px] sm:w-[350px] xl:w-[385px]"
-          style={{
-            transform: "rotateX(3deg) rotateY(-24deg) rotateZ(6deg) translateZ(40px)",
-          }}
-        >
+        {/* ── Phone: upright + viewport-height on mobile, 3D slant from lg up ── */}
+        <div className="relative w-[min(76vw,300px)] sm:w-[350px] xl:w-[385px] lg:[transform:rotateX(3deg)_rotateY(-24deg)_rotateZ(6deg)_translateZ(40px)]">
           <div
-            className="overflow-hidden rounded-[2.9rem] bg-[#151515]"
-            style={{
-              padding: "3px",
-              boxShadow:
-                "10px 8px 0 0 #050505, 12px 10px 0 0 #2a2a2a, 0 55px 110px -20px rgba(0,0,0,0.9), inset 0 0.5px 0 rgba(255,255,255,0.12)",
-            }}
+            className="overflow-hidden rounded-[2.9rem] bg-[#151515] p-[3px] shadow-[0_45px_90px_-25px_rgba(0,0,0,0.85),inset_0_0.5px_0_rgba(255,255,255,0.12)] lg:shadow-[10px_8px_0_0_#050505,12px_10px_0_0_#2a2a2a,0_55px_110px_-20px_rgba(0,0,0,0.9),inset_0_0.5px_0_rgba(255,255,255,0.12)]"
           >
             <div className="relative overflow-hidden rounded-[2.7rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
-              <StatusBar />
+              <StatusBar time={clock} />
 
               {/* Screen stage */}
-              <div className="relative flex min-h-[380px] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">
+              <div className="relative flex min-h-[max(380px,52svh)] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">
                 {/* ── Home + notification shade ── */}
                 {onHomeStack && (
                   <div className="relative flex flex-1 flex-col">
                     {/* Home wallpaper */}
                     <div className="flex flex-1 flex-col items-center justify-center gap-1.5">
                       <p className="font-display text-4xl font-bold tracking-tight text-white/90 sm:text-5xl">
-                        12:46
+                        {clock}
                       </p>
-                      <p className="text-[11px] text-white/50">Mon, 6 July</p>
+                      <p className="text-[11px] text-white/50">{dateLabel}</p>
                       <div className="mt-6 flex flex-col items-center gap-1 text-white/40">
                         <Icon name="chevron" className="h-4 w-4 animate-bounce" />
                         <p className="text-[10px]">Swipe down for Wi-Fi</p>
@@ -554,7 +562,7 @@ export function HeroVisual() {
                       <p className="font-display text-sm font-bold text-white">Payment Received</p>
                       <p className="mt-1.5 text-[10px] text-white/50">Access code</p>
                       <p className="font-mono text-base font-semibold tracking-[0.2em] text-dice-cyan">
-                        RG4K5MNAB
+                        {mpesaCode}
                       </p>
                     </div>
                     <div className="w-full max-w-[190px]">
@@ -611,7 +619,7 @@ export function HeroVisual() {
                 ? "ring-1 ring-slate-300/60 dark:shadow-[0_0_24px_-4px_rgba(94,200,255,0.45)] dark:ring-white/45"
                 : ""
             }`}
-            style={{ ...app.style, backgroundColor: app.color, transform: "translateZ(85px)" }}
+            style={{ ...app.style, backgroundColor: app.color }}
           >
             <svg
               viewBox="0 0 24 24"
