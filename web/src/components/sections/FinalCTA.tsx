@@ -1,11 +1,12 @@
+import React from "react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { Reveal } from "../Reveal";
 import { Icon } from "../ui/Icon";
 
-function LogoDice({ className = "" }: { className?: string }) {
+function LogoDice({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div className={`overflow-hidden ${className}`} style={style}>
       <img src="/logo.png" alt="" className="h-full w-auto max-w-none dark:brightness-0 dark:invert" />
     </div>
   );
