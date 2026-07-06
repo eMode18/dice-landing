@@ -76,7 +76,6 @@ export function Portal() {
         {/* Left: text */}
         <div className="order-2 flex flex-col gap-6 lg:order-1">
           <SectionHeading
-            eyebrow="The Portal"
             title="Connect to Dice"
             subtitle="Connect to any Dice hotspot and the portal opens automatically in your browser — pick a plan, pay with M-Pesa, or sign back in instantly with your transaction code."
             align="left"

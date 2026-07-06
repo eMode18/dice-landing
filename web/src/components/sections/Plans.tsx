@@ -13,7 +13,6 @@ export function Plans() {
 
       <Container className="flex flex-col gap-12 sm:gap-16 lg:gap-20">
         <SectionHeading
-          eyebrow="Pricing"
           title="Choose Your Plan"
           subtitle="Flexible internet plans for every lifestyle — pick one in seconds, upgrade or cancel anytime."
         />
