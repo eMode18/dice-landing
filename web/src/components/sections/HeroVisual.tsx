@@ -330,6 +330,7 @@ export function HeroVisual() {
     phase === "portal" || phase === "package" || phase === "phoneNum" || phase === "stk" || phase === "pin";
   const packagePicked = phase !== "portal" && onPortal;
   const stkOpen = phase === "stk" || phase === "pin";
+  const wifiJoined = onPortal || phase === "connecting" || phase === "connected";
 
   return (
     <div className="relative mx-auto w-full max-w-[480px] overflow-hidden sm:max-w-140 lg:mx-0 lg:max-w-none lg:overflow-visible">
@@ -350,7 +351,8 @@ export function HeroVisual() {
           ))}
         </div>
 
-        {/* Clean single-tone stage behind phone (replaces busy overlapping blobs) */}
+        {/* Clean single-tone stage behind phone (keeps the mockup on a
+            consistent surface instead of the section's own colored glows) */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[92%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.9),rgba(255,255,255,0)_72%)] dark:bg-[radial-gradient(closest-side,rgba(94,200,255,0.12),transparent_72%)]" />
 
         {/* Glow behind phone */}
@@ -369,7 +371,7 @@ export function HeroVisual() {
             className="overflow-hidden rounded-[2.9rem] bg-[#151515] p-[3px] shadow-[0_45px_90px_-25px_rgba(0,0,0,0.85),inset_0_0.5px_0_rgba(255,255,255,0.12)] lg:shadow-[10px_8px_0_0_#050505,12px_10px_0_0_#2a2a2a,0_55px_110px_-20px_rgba(0,0,0,0.9),inset_0_0.5px_0_rgba(255,255,255,0.12)]"
           >
             <div className="relative overflow-hidden rounded-[2.7rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
-              <StatusBar time={clock} wifiConnected={phase === "connecting" || phase === "connected"} />
+              <StatusBar time={clock} wifiConnected={wifiJoined} />
 
               {/* Screen stage */}
               <div className="relative flex min-h-[max(380px,52svh)] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">

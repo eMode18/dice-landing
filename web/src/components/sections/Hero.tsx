@@ -163,18 +163,9 @@ export function Hero() {
       ref={rootRef}
       className="relative isolate overflow-hidden bg-dice-mist pb-14 pt-28 dark:bg-dice-ink sm:pb-16 sm:pt-32 lg:pb-20 lg:pt-36"
     >
-      {/* ── LIGHT MODE: colored blob base for the glass layer ── */}
-      <div className="absolute inset-0 -z-30 dark:hidden">
-        <div className="absolute -left-20 top-0 h-[500px] w-[500px] rounded-full bg-dice-blue/15 blur-[120px]" />
-        <div className="absolute -right-20 top-20 h-[400px] w-[400px] rounded-full bg-dice-cyan/12 blur-[100px]" />
-        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-dice-blue/8 blur-[100px]" />
-      </div>
-
-      {/* ── LIGHT MODE: frosted glass layer ── */}
-      <div className="absolute inset-0 -z-20 bg-white/65 backdrop-blur-3xl dark:hidden" />
-
-      {/* ── LIGHT MODE: noise grain texture ── */}
-      <div className="noise-grain pointer-events-none absolute inset-0 -z-10 opacity-[0.035] dark:hidden" />
+      {/* ── LIGHT MODE: clean gradient wash with a single soft accent glow ── */}
+      <div className="absolute inset-0 -z-30 bg-linear-to-b from-dice-mist via-white to-white dark:hidden" />
+      <div className="pointer-events-none absolute -right-32 -top-32 -z-20 h-105 w-105 rounded-full bg-dice-blue/6 blur-[130px] dark:hidden" />
 
       {/* ── DARK MODE: dot grid texture ── */}
       <div
