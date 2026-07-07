@@ -16,8 +16,8 @@ function NetworkCanvas() {
     if (!_el || !_ctx) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let canvas: HTMLCanvasElement = _el;
-    let ctx: CanvasRenderingContext2D = _ctx;
+    const canvas: HTMLCanvasElement = _el;
+    const ctx: CanvasRenderingContext2D = _ctx;
 
     let raf: number;
     let running = true;

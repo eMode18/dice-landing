@@ -11,12 +11,6 @@ export const trustIndicators = [
   { label: "Secure Connections", icon: "shield" },
 ] as const;
 
-export const stats = [
-  { value: 50000, suffix: "+", label: "Active Users" },
-  { value: 10000, suffix: "+", label: "Daily Connections" },
-  { value: 99.9, suffix: "%", label: "Uptime" },
-] as const;
-
 export interface Plan {
   name: string;
   price: string;
@@ -110,41 +104,6 @@ export const steps = [
   {
     title: "Start Browsing",
     description: "You're connected — enjoy fast, secure internet in seconds.",
-  },
-] as const;
-
-export const testimonials = [
-  {
-    name: "Wanjiru Kamau",
-    role: "University Student",
-    rating: 5,
-    quote:
-      "I'm always on Instagram and TikTok between lectures, and group video calls with my classmates never lag on Dice — even when the whole library is connected.",
-    initials: "WK",
-  },
-  {
-    name: "Brian Otieno",
-    role: "Football Fan",
-    rating: 5,
-    quote:
-      "Matchday Saturdays are sorted. I stream every Premier League game in HD on Dice without a single buffer, even when the whole estate is watching too.",
-    initials: "BO",
-  },
-  {
-    name: "Amina Hassan",
-    role: "Boutique Owner",
-    rating: 5,
-    quote:
-      "I run my boutique's Instagram page and WhatsApp orders straight off Dice — photos upload fast, replies go out fast, and customers never have to wait.",
-    initials: "AH",
-  },
-  {
-    name: "Kevin Mwangi",
-    role: "Music & Movie Lover",
-    rating: 5,
-    quote:
-      "Netflix marathons, Spotify playlists, YouTube on repeat — Dice handles it all without breaking a sweat. Best hotspot I've used in Nairobi.",
-    initials: "KM",
   },
 ] as const;
 

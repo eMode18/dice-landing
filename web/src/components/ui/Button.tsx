@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost" | "outline-light";
+type Variant = "primary" | "secondary";
 type Size = "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -8,7 +8,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
   size?: Size;
   href?: string;
-  icon?: ReactNode;
 }
 
 const base =
@@ -19,9 +18,6 @@ const variants: Record<Variant, string> = {
     "bg-dice-blue text-white shadow-[0_8px_30px_-8px_rgba(0,102,255,0.65)] hover:shadow-[0_12px_40px_-6px_rgba(0,102,255,0.8)] hover:-translate-y-0.5 active:translate-y-0",
   secondary:
     "bg-white text-dice-dark border border-slate-200 shadow-sm hover:border-dice-blue/40 hover:-translate-y-0.5 active:translate-y-0",
-  ghost: "text-dice-dark hover:text-dice-blue",
-  "outline-light":
-    "border border-white/35 text-white hover:bg-white/10 hover:-translate-y-0.5 active:translate-y-0",
 };
 
 const sizes: Record<Size, string> = {
@@ -34,7 +30,6 @@ export function Button({
   variant = "primary",
   size = "md",
   href,
-  icon,
   className = "",
   ...rest
 }: ButtonProps) {
@@ -44,7 +39,6 @@ export function Button({
     return (
       <a href={href} className={classes}>
         <span className="inline-flex items-center gap-2 whitespace-nowrap">{children}</span>
-        {icon}
       </a>
     );
   }
@@ -52,7 +46,6 @@ export function Button({
   return (
     <button className={classes} {...rest}>
       <span>{children}</span>
-      {icon}
     </button>
   );
 }
