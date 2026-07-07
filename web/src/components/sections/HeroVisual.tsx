@@ -20,12 +20,12 @@ type Phase =
 const DEMO_MSISDN = "0712345678";
 
 const socialApps = [
-  { name: "WhatsApp", color: "#22c55e", dark: false, style: { left: "0%", top: "10%" } },
-  { name: "Instagram", color: "#ec4899", dark: false, style: { right: "1%", top: "13%" } },
-  { name: "Spotify", color: "#10b981", dark: false, style: { left: "0%", top: "44%" } },
-  { name: "X", color: "#0f172a", dark: true, style: { right: "0%", top: "42%" } },
-  { name: "YouTube", color: "#ef4444", dark: false, style: { left: "3%", bottom: "22%" } },
-  { name: "TikTok", color: "#161623", dark: true, style: { right: "5%", bottom: "18%" } },
+  { name: "WhatsApp", color: "#22c55e", dark: false, style: { left: "4%", top: "12%" } },
+  { name: "Instagram", color: "#ec4899", dark: false, style: { right: "5%", top: "15%" } },
+  { name: "Spotify", color: "#10b981", dark: false, style: { left: "3%", top: "45%" } },
+  { name: "X", color: "#0f172a", dark: true, style: { right: "4%", top: "43%" } },
+  { name: "YouTube", color: "#ef4444", dark: false, style: { left: "6%", bottom: "20%" } },
+  { name: "TikTok", color: "#161623", dark: true, style: { right: "7%", bottom: "17%" } },
 ] as const;
 
 function SocialGlyph({ name }: { name: (typeof socialApps)[number]["name"] }) {
@@ -333,10 +333,10 @@ export function HeroVisual() {
   const wifiJoined = onPortal || phase === "connecting" || phase === "connected";
 
   return (
-    <div className="relative mx-auto w-full max-w-[480px] overflow-hidden sm:max-w-140 lg:mx-0 lg:max-w-none lg:overflow-visible">
+    <div className="relative mx-auto w-full max-w-[480px] sm:max-w-140 lg:mx-0 lg:max-w-none">
       <div
         ref={sceneRef}
-        className="relative flex justify-center py-5 sm:py-8 [transform-style:preserve-3d]"
+        className="relative flex justify-center py-5 sm:py-8"
       >
         {/* Signal rings behind phone */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 sm:h-72 sm:w-72">
@@ -364,17 +364,17 @@ export function HeroVisual() {
 
         {/* ── Phone: upright + viewport-height on mobile, 3D slant from lg up ── */}
         <div className="relative w-[min(76vw,300px)] sm:w-[350px] xl:w-[385px] lg:[transform:rotateX(3deg)_rotateY(-24deg)_rotateZ(6deg)_translateZ(40px)]">
-          {/* Grounded contact shadow — keeps the phone from looking like it floats */}
-          <div className="pointer-events-none absolute inset-x-[8%] -bottom-4 h-8 rounded-[100%] bg-black/35 blur-xl dark:bg-black/60" />
+          {/* Soft grounded shadow — keeps the phone from looking like it floats */}
+          <div className="pointer-events-none absolute inset-x-[14%] -bottom-3 h-6 rounded-[100%] bg-black/25 blur-2xl dark:bg-black/45" />
 
           <div
             className="overflow-hidden rounded-[2.9rem] bg-[#151515] p-[3px] shadow-[0_45px_90px_-25px_rgba(0,0,0,0.85),inset_0_0.5px_0_rgba(255,255,255,0.12)] lg:shadow-[10px_8px_0_0_#050505,12px_10px_0_0_#2a2a2a,0_55px_110px_-20px_rgba(0,0,0,0.9),inset_0_0.5px_0_rgba(255,255,255,0.12)]"
           >
-            <div className="relative overflow-hidden rounded-[2.7rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
+            <div className="relative overflow-hidden rounded-[2.7rem] bg-[#0b1d47]">
               <StatusBar time={clock} wifiConnected={wifiJoined} />
 
               {/* Screen stage */}
-              <div className="relative flex min-h-[max(380px,52svh)] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">
+              <div className="relative flex min-h-[max(360px,44svh)] flex-col px-4 pb-7 pt-3 sm:min-h-[430px] sm:px-5">
                 {/* ── Home + notification shade ── */}
                 {onHomeStack && (
                   <div className="relative flex flex-1 flex-col">

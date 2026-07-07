@@ -186,12 +186,9 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-20 top-10 hidden h-[480px] w-[480px] rounded-full bg-dice-cyan/7 blur-[130px] dark:block" />
       <div className="pointer-events-none absolute bottom-10 left-1/3 hidden h-64 w-80 rounded-full bg-dice-blue/8 blur-[100px] dark:block" />
 
-      {/* Bottom fade into next section */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-linear-to-t from-dice-mist to-transparent dark:from-dice-ink" />
-
-      <Container className="relative grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
-        <div className="flex flex-col items-start gap-6 text-left sm:gap-7">
-          <h1 className="font-display max-w-xl text-[2.5rem] leading-[1.08] font-semibold text-dice-ink perspective-midrange dark:text-white sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
+      <Container className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
+        <div className="flex flex-col items-start gap-5 text-left sm:gap-7">
+          <h1 className="font-display max-w-xl text-[2.4rem] leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
             <span data-hero-line className="block">Your WiFi Hotspot.</span>
             <span data-hero-line className="block text-dice-blue dark:text-dice-cyan">
               Plans from KSh 10.
