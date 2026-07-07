@@ -19,13 +19,62 @@ type Phase =
 
 const DEMO_MSISDN = "0712345678";
 
+/* Vertical anchors use fixed px, not %: `sceneRef` has an auto/content
+   height, and per spec, percentage top/bottom on an absolutely positioned
+   child resolves against the containing block's height only when that
+   height is definite — against an auto height it computes as unset, so
+   every chip collapsed to the same "static position" near the container's
+   top. left/right worked because the container's width is definite (a
+   block fills its parent). Fixed px sidesteps the ambiguity entirely. */
 const socialApps = [
-  { name: "WhatsApp", color: "#22c55e", dark: false, style: { left: "4%", top: "12%" } },
-  { name: "Instagram", color: "#ec4899", dark: false, style: { right: "5%", top: "15%" } },
-  { name: "Spotify", color: "#10b981", dark: false, style: { left: "3%", top: "45%" } },
-  { name: "X", color: "#0f172a", dark: true, style: { right: "4%", top: "43%" } },
-  { name: "YouTube", color: "#ef4444", dark: false, style: { left: "6%", bottom: "20%" } },
-  { name: "TikTok", color: "#161623", dark: true, style: { right: "7%", bottom: "17%" } },
+  {
+    name: "WhatsApp",
+    from: "#4ade80",
+    to: "#15803d",
+    dark: false,
+    tilt: -6,
+    style: { left: "4%", top: "32px" },
+  },
+  {
+    name: "Instagram",
+    from: "#f9a8d4",
+    to: "#a21caf",
+    dark: false,
+    tilt: 5,
+    style: { right: "5%", top: "40px" },
+  },
+  {
+    name: "Spotify",
+    from: "#6ee7b7",
+    to: "#047857",
+    dark: false,
+    tilt: 4,
+    style: { left: "3%", top: "200px" },
+  },
+  {
+    name: "X",
+    from: "#3f3f46",
+    to: "#000000",
+    dark: true,
+    tilt: -5,
+    style: { right: "4%", top: "200px" },
+  },
+  {
+    name: "YouTube",
+    from: "#f87171",
+    to: "#b91c1c",
+    dark: false,
+    tilt: 6,
+    style: { left: "6%", bottom: "56px" },
+  },
+  {
+    name: "TikTok",
+    from: "#3a3a48",
+    to: "#050508",
+    dark: true,
+    tilt: -4,
+    style: { right: "7%", bottom: "44px" },
+  },
 ] as const;
 
 function SocialGlyph({ name }: { name: (typeof socialApps)[number]["name"] }) {
@@ -227,22 +276,35 @@ export function HeroVisual() {
 
       if (phase === "connected") {
         if (reduced) {
-          gsap.set(chips, { scale: 1, opacity: 1, y: 0 });
+          gsap.set(chips, { scale: 1, opacity: 1, y: 0, rotate: 0 });
           return;
         }
-        gsap.fromTo(
-          chips,
-          { scale: 0, opacity: 0, y: 14 },
-          { scale: 1, opacity: 1, y: 0, duration: 0.55, stagger: 0.09, ease: "back.out(2.2)" }
-        );
         chips.forEach((el, i) => {
+          const tilt = Number(el.dataset.tilt ?? 0);
+          gsap.fromTo(
+            el,
+            { scale: 0, opacity: 0, y: 20, z: -120, rotate: tilt * 3, rotationX: 40 },
+            {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+              z: 0,
+              rotate: tilt,
+              rotationX: 0,
+              duration: 0.65,
+              delay: i * 0.09,
+              ease: "back.out(2.4)",
+              transformPerspective: 600,
+            }
+          );
           gsap.to(el, {
             y: i % 2 === 0 ? -10 : 9,
+            rotate: tilt + (i % 2 === 0 ? 3 : -3),
             duration: 3 + i * 0.45,
             ease: "sine.inOut",
             repeat: -1,
             yoyo: true,
-            delay: 0.6 + i * 0.1,
+            delay: 0.65 + i * 0.1,
           });
         });
 
@@ -620,19 +682,29 @@ export function HeroVisual() {
           </div>
         </div>
 
-        {/* ── App chips: pop out only while connected, each with its own life ── */}
+        {/* ── App chips: pop out only while connected, each with its own life ──
+             3D glossy look: diagonal gradient body + inner top sheen + bottom
+             inset shadow for volume, elevated drop shadow so they read as
+             floating above the phone screen rather than flat stickers. */}
         {socialApps.map((app) => (
           <div
             key={app.name}
             data-social
+            data-tilt={app.tilt}
             aria-hidden={phase !== "connected"}
-            className={`absolute flex h-12 w-12 items-center justify-center rounded-2xl opacity-0 shadow-[0_18px_40px_-12px_rgba(5,16,38,0.6)] sm:h-14 sm:w-14 ${
+            className={`absolute flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl opacity-0 shadow-[0_22px_45px_-14px_rgba(5,16,38,0.65),inset_0_-6px_10px_-4px_rgba(0,0,0,0.45),inset_0_2px_1px_rgba(255,255,255,0.35)] sm:h-14 sm:w-14 ${
               app.dark
-                ? "ring-1 ring-slate-300/60 dark:shadow-[0_0_24px_-4px_rgba(94,200,255,0.45)] dark:ring-white/45"
+                ? "ring-1 ring-slate-300/60 dark:shadow-[0_0_26px_-4px_rgba(94,200,255,0.5),inset_0_-6px_10px_-4px_rgba(0,0,0,0.45),inset_0_2px_1px_rgba(255,255,255,0.35)] dark:ring-white/45"
                 : ""
             }`}
-            style={{ ...app.style, backgroundColor: app.color }}
+            style={{
+              ...app.style,
+              backgroundImage: `linear-gradient(145deg, ${app.from}, ${app.to})`,
+            }}
           >
+            {/* Glossy top sheen */}
+            <span className="pointer-events-none absolute inset-x-0 top-0 h-2/3 rounded-t-2xl bg-linear-to-b from-white/40 via-white/5 to-transparent" />
+
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -640,7 +712,8 @@ export function HeroVisual() {
               strokeWidth={1.8}
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-6 w-6 sm:h-7 sm:w-7"
+              className="relative h-6 w-6 sm:h-7 sm:w-7"
+              style={{ filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.4))" }}
             >
               <SocialGlyph name={app.name} />
             </svg>
