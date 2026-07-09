@@ -562,7 +562,7 @@ export function HeroVisual() {
     <div
       ref={outerRef}
       className="relative mx-auto"
-      style={{ aspectRatio: "540 / 660", width: "min(540px, 100%, calc(62vh * 540 / 660))" }}
+      style={{ aspectRatio: "540 / 660", width: "min(540px, 100%, calc(80vh * 540 / 660))" }}
     >
       <div ref={stageRef} className="absolute left-1/2 top-1/2" style={{ width: 540, height: 660, transformOrigin: "center" }}>
         {/* rings, locked to the phone's orientation */}
