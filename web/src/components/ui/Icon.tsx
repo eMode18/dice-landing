@@ -121,8 +121,10 @@ const paths: Record<string, React.ReactElement> = {
   ),
 };
 
+export type IconName = keyof typeof paths;
+
 interface IconProps extends SVGProps<SVGSVGElement> {
-  name: keyof typeof paths;
+  name: IconName;
 }
 
 export function Icon({ name, className = "h-5 w-5", ...rest }: IconProps) {

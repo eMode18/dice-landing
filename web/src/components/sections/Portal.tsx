@@ -16,7 +16,9 @@ function PhoneFrame({ children, className = "" }: { children: React.ReactNode; c
       {/* Outer phone chassis */}
       <div className="overflow-hidden rounded-[3.2rem] bg-[#0a1a3f] p-[3px] shadow-[0_50px_100px_-24px_rgba(5,16,38,0.7),0_0_0_1px_rgba(255,255,255,0.1)]">
         {/* Inner screen */}
-        <div className="overflow-hidden rounded-[3rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
+        <div className="relative overflow-hidden rounded-[3rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
+          {/* Notch */}
+          <div className="absolute left-1/2 top-2.5 h-[18px] w-[74px] -translate-x-1/2 rounded-full bg-black" />
           {/* Status bar */}
           <div className="flex items-center justify-between px-6 pb-1 pt-5">
             <span className="text-xs font-semibold text-white/70">9:41</span>
@@ -31,9 +33,11 @@ function PhoneFrame({ children, className = "" }: { children: React.ReactNode; c
             </div>
           </div>
           {/* Content */}
-          <div className="px-5 pb-7 pt-3">
+          <div className="px-5 pb-8 pt-3">
             {children}
           </div>
+          {/* Home indicator */}
+          <div className="absolute bottom-2 left-1/2 h-[3px] w-20 -translate-x-1/2 rounded-full bg-white/30" />
         </div>
       </div>
     </div>
@@ -70,13 +74,13 @@ export function Portal() {
   );
 
   return (
-    <section ref={rootRef} className="relative isolate overflow-hidden py-20 sm:py-28 lg:py-32">
+    <section id="connect" ref={rootRef} className="relative isolate overflow-hidden py-20 sm:py-28 lg:py-32">
       <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-12 xl:gap-20">
 
         {/* Left: text */}
         <div className="order-2 flex flex-col gap-6 lg:order-1">
           <SectionHeading
-            title="Connect to Dice"
+            title="Connect to Dice WiFi"
             subtitle="Connect to any Dice hotspot and the portal opens automatically in your browser — pick a plan, pay with M-Pesa, or sign back in instantly with your transaction code."
             align="left"
           />

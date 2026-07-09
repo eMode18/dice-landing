@@ -1,6 +1,7 @@
 import { Container } from "../ui/Container";
 import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../Reveal";
+import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 import { plans } from "../../data/content";
 
@@ -17,7 +18,7 @@ export function Plans() {
           {plans.map((plan, i) => (
             <Reveal key={plan.name} delay={i * 0.06} className="h-full">
               <article
-                className={`group relative flex h-full flex-col gap-7 overflow-hidden rounded-[28px] border px-7 py-9 transition-all duration-400 hover:-translate-y-2 sm:px-8 ${
+                className={`group relative flex h-full flex-col gap-6 overflow-hidden rounded-[28px] border px-7 py-9 transition-all duration-400 hover:-translate-y-2 sm:px-8 ${
                   plan.popular
                     ? "border-dice-blue/30 bg-linear-to-b from-dice-dark to-[#062a6b] text-white shadow-[0_36px_90px_-28px_rgba(0,102,255,0.55)]"
                     : "border-slate-200/80 bg-white text-dice-ink hover:border-dice-blue/30 hover:shadow-[0_22px_60px_-20px_rgba(0,102,255,0.2)] dark:border-white/10 dark:bg-white/5 dark:text-white"
@@ -29,6 +30,14 @@ export function Plans() {
                     Most Popular
                   </span>
                 )}
+
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl shadow-[0_8px_24px_-8px_rgba(0,102,255,0.5)] transition-transform duration-400 group-hover:scale-105 ${
+                    plan.popular ? "bg-white/15 text-white" : "bg-dice-blue text-white"
+                  }`}
+                >
+                  <Icon name={plan.icon} className="h-6 w-6" />
+                </div>
 
                 <div className="flex flex-col gap-1.5">
                   <h3 className="font-display text-xl font-semibold sm:text-2xl">{plan.name}</h3>
@@ -58,6 +67,18 @@ export function Plans() {
                     </li>
                   ))}
                 </ul>
+
+                <Button
+                  href="#connect"
+                  size="md"
+                  variant={plan.popular ? "secondary" : "primary"}
+                  className={`w-full justify-center ${
+                    plan.popular ? "bg-white text-dice-dark hover:border-white/40" : ""
+                  }`}
+                >
+                  Get {plan.name}
+                  <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
 
                 <div
                   className={`pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full blur-3xl transition-opacity duration-500 ${

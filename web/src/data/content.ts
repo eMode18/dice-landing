@@ -1,3 +1,5 @@
+import type { IconName } from "../components/ui/Icon";
+
 export const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Plans", href: "#plans" },
@@ -17,6 +19,7 @@ export interface Plan {
   period: string;
   description: string;
   features: string[];
+  icon: IconName;
   popular?: boolean;
 }
 
@@ -27,6 +30,7 @@ export const plans: Plan[] = [
     period: "/ day",
     description: "Perfect for a quick session on the go.",
     features: ["1 Day Access", "1 Device", "Basic Speed"],
+    icon: "bolt",
   },
   {
     name: "Weekly",
@@ -34,6 +38,7 @@ export const plans: Plan[] = [
     period: "/ week",
     description: "Great for short stays and visiting projects.",
     features: ["7 Days Access", "2 Devices", "Faster Speeds"],
+    icon: "refresh",
     popular: true,
   },
   {
@@ -42,6 +47,7 @@ export const plans: Plan[] = [
     period: "/ month",
     description: "Our most popular plan for everyday life.",
     features: ["30 Days Access", "Multiple Devices", "Unlimited Browsing"],
+    icon: "gauge",
   },
   {
     name: "Premium Unlimited",
@@ -49,6 +55,7 @@ export const plans: Plan[] = [
     period: "/ month",
     description: "Built for power users and growing teams.",
     features: ["Unlimited Devices", "Maximum Speeds", "Priority Support"],
+    icon: "layers",
   },
 ];
 
