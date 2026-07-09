@@ -42,10 +42,12 @@ export function Hero() {
 
   return (
     <section id="home" ref={rootRef} className="relative isolate pb-10 pt-20 sm:pb-12 sm:pt-24 lg:pb-16 lg:pt-28">
-      <Container className="relative grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-14">
-        <div className="flex flex-col items-start gap-5 text-left sm:gap-7">
-          <h1 className="font-display max-w-xl leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white">
-            <span data-hero-line className="block text-[2.4rem] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
+      <Container className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-14">
+        {/* Mobile/tablet: lead with the product demo, then explain it.
+            Desktop: natural text-then-visual order in the 2-column grid. */}
+        <div className="order-2 flex flex-col items-center gap-5 text-center sm:gap-7 lg:order-none lg:items-start lg:text-left">
+          <h1 className="font-display max-w-md leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white lg:max-w-xl">
+            <span data-hero-line className="block text-[2.6rem] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
               Dice WiFi
             </span>
             <span data-hero-line className="mt-2 block text-xl font-medium text-dice-blue sm:text-2xl lg:text-[1.75rem] dark:text-dice-cyan">
@@ -55,15 +57,15 @@ export function Hero() {
 
           <p
             data-hero-sub
-            className="max-w-lg text-base leading-relaxed text-slate-600 dark:text-white/65 sm:text-lg"
+            className="max-w-xs text-base leading-relaxed text-slate-600 dark:text-white/65 sm:max-w-sm sm:text-lg lg:max-w-lg"
           >
             Connect to any Dice hotspot, choose a plan, pay with M-Pesa, and
             start browsing. Works on any device with no app or setup required.
           </p>
 
-          <div className="flex flex-row flex-wrap items-center gap-3 sm:gap-4">
-            <span data-hero-cta>
-              <Button href="#plans" size="lg">
+          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
+            <span data-hero-cta className="w-full sm:w-auto">
+              <Button href="#plans" size="lg" className="w-full justify-center sm:w-auto">
                 View Plans
                 <Icon
                   name="arrowRight"
@@ -71,19 +73,19 @@ export function Hero() {
                 />
               </Button>
             </span>
-            <span data-hero-cta>
+            <span data-hero-cta className="w-full sm:w-auto">
               <Button
                 href="#how-it-works"
                 variant="secondary"
                 size="lg"
-                className="dark:border-white/35 dark:bg-transparent dark:text-white dark:hover:bg-white/10"
+                className="w-full justify-center sm:w-auto dark:border-white/35 dark:bg-transparent dark:text-white dark:hover:bg-white/10"
               >
                 How It Works
               </Button>
             </span>
           </div>
 
-          <dl className="mt-2 flex flex-wrap items-center gap-x-7 gap-y-3 sm:gap-x-9">
+          <dl className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 lg:justify-start sm:gap-x-9">
             {trustIndicators.map((item) => (
               <div
                 data-hero-trust
@@ -100,7 +102,9 @@ export function Hero() {
           </dl>
         </div>
 
-        <HeroVisual />
+        <div className="order-1 lg:order-none">
+          <HeroVisual />
+        </div>
       </Container>
     </section>
   );
