@@ -119,6 +119,13 @@ const paths: Record<string, React.ReactElement> = {
       strokeLinejoin="round"
     />
   ),
+  bell: (
+    <path
+      d="M12 3a4 4 0 0 0-4 4v2.2c0 1.1-.4 2.1-1.1 2.9L5.6 13.6a1 1 0 0 0 .8 1.65h11.2a1 1 0 0 0 .8-1.65l-1.3-1.5A4.4 4.4 0 0 1 16 9.2V7a4 4 0 0 0-4-4Zm-2 15a2 2 0 0 0 4 0"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
 };
 
 export type IconName = keyof typeof paths;
