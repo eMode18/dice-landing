@@ -419,9 +419,9 @@ export function HeroVisual() {
         const isLast = idx === visibleApps.length - 1;
         const inStart = 18650 + idx * 300;
         const inP = P(t, inStart, inStart + 520);
-        const clearStart = 22700 + idx * 380;
-        const swipeP = P(t, clearStart, clearStart + 380);
-        const collapseP = P(t, clearStart + 220, clearStart + 620);
+        const clearStart = 22700 + idx * 460;
+        const swipeP = P(t, clearStart, clearStart + 520);
+        const collapseP = P(t, clearStart + 260, clearStart + 780);
         const enterOp = clamp(inP * 1.5, 0, 1);
         const exitOp = 1 - swipeP;
         card.style.opacity = String(Math.min(enterOp, exitOp));
@@ -559,21 +559,12 @@ export function HeroVisual() {
   }, []);
 
   return (
-    <div ref={outerRef} className="relative mx-auto w-full max-w-135" style={{ aspectRatio: "540 / 660" }}>
+    <div
+      ref={outerRef}
+      className="relative mx-auto"
+      style={{ aspectRatio: "540 / 660", width: "min(540px, 100%, calc(62vh * 540 / 660))" }}
+    >
       <div ref={stageRef} className="absolute left-1/2 top-1/2" style={{ width: 540, height: 660, transformOrigin: "center" }}>
-        {/* glow */}
-        <div
-          className="pointer-events-none absolute rounded-full blur-[6px]"
-          style={{
-            width: 420,
-            height: 420,
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "radial-gradient(circle, rgba(31,107,255,0.28), rgba(31,107,255,0) 65%)",
-          }}
-        />
-
         {/* rings, locked to the phone's orientation */}
         <div
           ref={ringsRef}
@@ -690,13 +681,12 @@ export function HeroVisual() {
               {/* CONTROL CENTER */}
               <div
                 ref={ccRef}
-                className="absolute left-0 right-0 top-0 box-border"
+                className="absolute left-0 right-0 top-0 box-border overflow-hidden"
                 style={{
                   zIndex: 22,
                   transform: "translateY(-100%)",
                   padding: "52px 16px 20px",
                   background: "linear-gradient(180deg,rgba(15,32,54,0.98),rgba(10,21,36,0.98))",
-                  backdropFilter: "blur(10px)",
                   borderRadius: "0 0 30px 30px",
                   boxShadow: "0 24px 46px -14px rgba(0,0,0,0.55)",
                 }}

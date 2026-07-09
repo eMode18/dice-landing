@@ -44,10 +44,12 @@ export function Hero() {
     <section id="home" ref={rootRef} className="relative isolate pb-14 pt-28 sm:pb-16 sm:pt-32 lg:pb-20 lg:pt-36">
       <Container className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
         <div className="flex flex-col items-start gap-5 text-left sm:gap-7">
-          <h1 className="font-display max-w-xl text-[2.4rem] leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
-            <span data-hero-line className="block">Your WiFi Hotspot.</span>
-            <span data-hero-line className="block text-dice-blue dark:text-dice-cyan">
-              Plans from KSh 10.
+          <h1 className="font-display max-w-xl leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white">
+            <span data-hero-line className="block text-[2.4rem] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
+              Dice WiFi
+            </span>
+            <span data-hero-line className="mt-2 block text-xl font-medium text-dice-blue sm:text-2xl lg:text-[1.75rem] dark:text-dice-cyan">
+              Plans from KSh 10
             </span>
           </h1>
 
