@@ -10,34 +10,59 @@ import { portalFeatures } from "../../data/content";
 
 const featureIcons = ["bolt", "card", "user", "gauge", "refresh"] as const;
 
+/* Chassis ported from the hero mockup (same gradient, shadow stack,
+   notch, and status bar treatment), scaled down for this section's
+   smaller frame. */
 function PhoneFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={`relative w-[220px] sm:w-[250px] ${className}`}>
-      {/* Outer phone chassis */}
-      <div className="overflow-hidden rounded-[3.2rem] bg-[#0a1a3f] p-[3px] shadow-[0_50px_100px_-24px_rgba(5,16,38,0.7),0_0_0_1px_rgba(255,255,255,0.1)]">
-        {/* Inner screen */}
-        <div className="relative overflow-hidden rounded-[3rem] bg-linear-to-b from-[#0d2055] to-[#071b45]">
+      <div
+        className="overflow-hidden"
+        style={{
+          borderRadius: 44,
+          padding: 9,
+          background: "linear-gradient(160deg,#3a3d44,#141518 60%)",
+          boxShadow:
+            "0 40px 70px -24px rgba(0,0,0,0.75), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35)",
+        }}
+      >
+        <div className="relative overflow-hidden" style={{ borderRadius: 35, background: "#0a1524" }}>
           {/* Notch */}
-          <div className="absolute left-1/2 top-2.5 h-[18px] w-[74px] -translate-x-1/2 rounded-full bg-black" />
+          <div
+            className="absolute left-1/2 -translate-x-1/2 bg-black"
+            style={{ top: 9, width: 84, height: 20, borderRadius: 12, zIndex: 40 }}
+          />
           {/* Status bar */}
-          <div className="flex items-center justify-between px-6 pb-1 pt-5">
-            <span className="text-xs font-semibold text-white/70">9:41</span>
-            <div className="flex items-center gap-2">
-              {/* signal bars */}
-              <div className="flex items-end gap-px">
-                {[40, 60, 80, 100].map((h, i) => (
-                  <span key={i} className="w-[3px] rounded-sm bg-white/60" style={{ height: `${h * 0.1 + 4}px` }} />
-                ))}
-              </div>
-              <Icon name="wifi" className="h-3.5 w-3.5 text-white/60" />
-            </div>
+          <div
+            className="relative flex items-center justify-between text-[11px] font-semibold text-white"
+            style={{ height: 34, padding: "0 18px" }}
+          >
+            <span style={{ paddingTop: 4 }}>9:41</span>
+            <span className="flex items-center gap-1" style={{ paddingTop: 4 }}>
+              <svg width="14" height="10" viewBox="0 0 18 12">
+                <rect x="0" y="7" width="3" height="5" rx="1" fill="#fff" />
+                <rect x="4.5" y="5" width="3" height="7" rx="1" fill="#fff" />
+                <rect x="9" y="2.5" width="3" height="9.5" rx="1" fill="#fff" />
+                <rect x="13.5" y="0" width="3" height="12" rx="1" fill="#fff" />
+              </svg>
+              <Icon name="wifi" className="h-3 w-3 text-white" />
+              <span
+                className="relative inline-block border"
+                style={{ width: 19, height: 10, borderRadius: 3, borderColor: "rgba(255,255,255,0.6)" }}
+              >
+                <span className="absolute rounded-[1px] bg-white" style={{ inset: "1.3px", width: "75%" }} />
+              </span>
+            </span>
           </div>
           {/* Content */}
-          <div className="px-5 pb-8 pt-3">
+          <div className="relative px-5 pb-8 pt-2" style={{ background: "linear-gradient(180deg,#0f2036,#0a1524)" }}>
             {children}
           </div>
           {/* Home indicator */}
-          <div className="absolute bottom-2 left-1/2 h-[3px] w-20 -translate-x-1/2 rounded-full bg-white/30" />
+          <div
+            className="absolute left-1/2 -translate-x-1/2 rounded-full bg-white/35"
+            style={{ bottom: 7, width: 96, height: 4, zIndex: 45 }}
+          />
         </div>
       </div>
     </div>
