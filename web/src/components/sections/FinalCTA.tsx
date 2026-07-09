@@ -14,10 +14,7 @@ function LogoDice({ className = "", style }: { className?: string; style?: React
 
 export function FinalCTA() {
   return (
-    <section className="relative isolate overflow-hidden bg-white py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
-      <div className="pointer-events-none absolute -left-20 top-0 -z-10 h-72 w-72 rounded-full bg-dice-blue/8 blur-[110px]" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 -z-10 h-80 w-80 rounded-full bg-dice-cyan/8 blur-[120px]" />
-
+    <section className="relative isolate overflow-hidden py-20 sm:py-28 lg:py-32">
       <LogoDice className="animate-float pointer-events-none absolute left-[6%] top-[18%] h-12 w-12 opacity-15 sm:h-16 sm:w-16" />
       <LogoDice className="pointer-events-none absolute bottom-[14%] right-[8%] h-16 w-16 rotate-12 opacity-10 sm:h-24 sm:w-24" style={{ animation: "float 9s ease-in-out infinite" } as React.CSSProperties} />
 

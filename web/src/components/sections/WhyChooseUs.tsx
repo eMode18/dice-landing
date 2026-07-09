@@ -6,7 +6,7 @@ import { features } from "../../data/content";
 
 export function WhyChooseUs() {
   return (
-    <section id="features" className="relative bg-dice-mist py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
+    <section id="features" className="relative py-20 sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-14 sm:gap-18 lg:gap-22">
         <SectionHeading
           title="Why Thousands Trust Dice WiFi"

@@ -15,12 +15,8 @@ export function Footer() {
   return (
     <footer
       id="footer-contact"
-      className="relative isolate overflow-hidden border-t border-slate-200/70 bg-dice-mist pt-20 dark:border-white/10 dark:bg-dice-ink sm:pt-24"
+      className="relative border-t border-slate-200/70 pt-20 dark:border-white/10 sm:pt-24"
     >
-      {/* Dark-mode-only depth layers */}
-      <div className="absolute inset-0 -z-10 hidden bg-linear-to-b from-dice-dark/40 via-dice-ink to-dice-ink dark:block" />
-      <div className="pointer-events-none absolute -left-32 top-10 -z-10 hidden h-72 w-72 rounded-full bg-dice-blue/20 blur-[120px] dark:block" />
-
       <Container>
         <div className="grid grid-cols-1 gap-12 pb-16 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-12">
           {/* Column 1 — Company info */}

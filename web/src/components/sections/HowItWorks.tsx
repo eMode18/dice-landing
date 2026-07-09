@@ -49,9 +49,7 @@ export function HowItWorks() {
   );
 
   return (
-    <section id="how-it-works" ref={rootRef} className="relative isolate overflow-hidden bg-dice-mist py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
-      <div className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-80 w-80 rounded-full bg-dice-blue/5 blur-[120px]" />
-
+    <section id="how-it-works" ref={rootRef} className="relative py-20 sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-14 sm:gap-16 lg:gap-20">
         <SectionHeading
           title="Getting Online is Easy"
@@ -73,7 +71,7 @@ export function HowItWorks() {
               <Reveal key={step.title} delay={i * 0.08} as="li" className="relative flex gap-5 lg:flex-col lg:gap-6">
                 <div
                   data-step-dot
-                  className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-dice-blue shadow-[0_14px_40px_-16px_rgba(0,102,255,0.5)] ring-4 ring-dice-mist dark:bg-dice-ink dark:text-dice-cyan dark:ring-white/10 lg:h-16 lg:w-16"
+                  className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-dice-blue shadow-[0_14px_40px_-16px_rgba(0,102,255,0.5)] ring-4 ring-dice-ash dark:bg-dice-ink dark:text-dice-cyan dark:ring-white/10 lg:h-16 lg:w-16"
                 >
                   <Icon name={stepIcons[i]} className="h-6 w-6 lg:h-7 lg:w-7" />
                   <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-dice-blue font-display text-[11px] font-bold text-white shadow-md">

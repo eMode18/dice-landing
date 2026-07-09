@@ -70,7 +70,7 @@ export function Portal() {
   );
 
   return (
-    <section ref={rootRef} className="relative isolate overflow-hidden bg-dice-mist py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
+    <section ref={rootRef} className="relative isolate overflow-hidden py-20 sm:py-28 lg:py-32">
       <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-12 xl:gap-20">
 
         {/* Left: text */}

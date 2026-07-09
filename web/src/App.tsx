@@ -12,7 +12,13 @@ import { Footer } from "./components/sections/Footer";
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-white font-body">
+    <div className="relative min-h-screen font-body">
+      {/* Single shared glow, anchored to the top of the page only — scrolls
+          away naturally so it never repeats or seams against lower sections. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 hidden h-[1100px] dark:block">
+        <div className="absolute left-1/2 top-[-120px] h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(31,107,255,0.28),transparent_65%)] blur-[6px]" />
+      </div>
+
       <Navbar />
       <main>
         <Hero />

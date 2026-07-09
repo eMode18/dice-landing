@@ -6,11 +6,7 @@ import { plans } from "../../data/content";
 
 export function Plans() {
   return (
-    <section id="plans" className="relative isolate overflow-hidden bg-white py-20 dark:bg-dice-ink sm:py-28 lg:py-32">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-linear-to-b from-dice-mist to-white dark:from-dice-ink/40 dark:to-dice-ink" />
-      <div className="pointer-events-none absolute -right-40 top-32 -z-10 h-96 w-96 rounded-full bg-dice-blue/5 blur-[120px]" />
-      <div className="pointer-events-none absolute -left-40 bottom-0 -z-10 h-96 w-96 rounded-full bg-dice-cyan/10 blur-[120px]" />
-
+    <section id="plans" className="relative py-20 sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-12 sm:gap-16 lg:gap-20">
         <SectionHeading
           title="Choose Your Plan"
