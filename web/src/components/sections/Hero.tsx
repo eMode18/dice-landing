@@ -41,8 +41,8 @@ export function Hero() {
   );
 
   return (
-    <section id="home" ref={rootRef} className="relative isolate pb-14 pt-28 sm:pb-16 sm:pt-32 lg:pb-20 lg:pt-36">
-      <Container className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 xl:gap-20">
+    <section id="home" ref={rootRef} className="relative isolate pb-10 pt-20 sm:pb-12 sm:pt-24 lg:pb-16 lg:pt-28">
+      <Container className="relative grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-14">
         <div className="flex flex-col items-start gap-5 text-left sm:gap-7">
           <h1 className="font-display max-w-xl leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white">
             <span data-hero-line className="block text-[2.4rem] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]">
