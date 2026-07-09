@@ -25,7 +25,7 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
           padding: 10,
           background: "linear-gradient(160deg,#3a3d44,#141518 60%)",
           boxShadow:
-            "0 45px 80px -26px rgba(0,0,0,0.75), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35)",
+            "0 24px 40px -18px rgba(0,0,0,0.45), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35)",
         }}
       >
         <div className="relative overflow-hidden" style={{ borderRadius: 38, background: "#0a1524" }}>
@@ -109,7 +109,7 @@ export function Portal() {
 
         {/* Right: 2 phone mockups — swipeable carousel on mobile, fan on desktop.
             Static (no float/entrance motion) on a fully transparent backdrop. */}
-        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-8 overflow-x-auto px-10 pb-4 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
+        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-8 overflow-x-auto px-10 pb-16 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
 
           {/* Screen 1 — the actual captive portal */}
           <div className="relative z-10 shrink-0 snap-center lg:-rotate-6">
