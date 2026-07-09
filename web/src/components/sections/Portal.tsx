@@ -10,58 +10,59 @@ import { portalFeatures } from "../../data/content";
 
 const featureIcons = ["bolt", "card", "user", "gauge", "refresh"] as const;
 
-/* Chassis ported from the hero mockup (same gradient, shadow stack,
-   notch, and status bar treatment), scaled down for this section's
-   smaller frame. */
+/* Chassis matching the hero mockup exactly (same gradient, shadow
+   stack, notch, and status bar treatment) — sized close to the
+   hero's own 300px reference now that there are only two phones to
+   fit, so the chrome values are used near 1:1 rather than scaled down. */
 function PhoneFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`relative w-[220px] sm:w-[250px] ${className}`}>
+    <div className={`relative w-[270px] sm:w-[310px] ${className}`}>
       <div
         className="overflow-hidden"
         style={{
-          borderRadius: 44,
-          padding: 9,
+          borderRadius: 52,
+          padding: 11,
           background: "linear-gradient(160deg,#3a3d44,#141518 60%)",
           boxShadow:
-            "0 40px 70px -24px rgba(0,0,0,0.75), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35)",
+            "0 45px 80px -26px rgba(0,0,0,0.75), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35)",
         }}
       >
-        <div className="relative overflow-hidden" style={{ borderRadius: 35, background: "#0a1524" }}>
+        <div className="relative overflow-hidden" style={{ borderRadius: 41, background: "#0a1524" }}>
           {/* Notch */}
           <div
             className="absolute left-1/2 -translate-x-1/2 bg-black"
-            style={{ top: 9, width: 84, height: 20, borderRadius: 12, zIndex: 40 }}
+            style={{ top: 12, width: 100, height: 25, borderRadius: 15, zIndex: 40 }}
           />
           {/* Status bar */}
           <div
-            className="relative flex items-center justify-between text-[11px] font-semibold text-white"
-            style={{ height: 34, padding: "0 18px" }}
+            className="relative flex items-center justify-between text-xs font-semibold text-white"
+            style={{ height: 42, padding: "0 22px" }}
           >
-            <span style={{ paddingTop: 4 }}>9:41</span>
-            <span className="flex items-center gap-1" style={{ paddingTop: 4 }}>
-              <svg width="14" height="10" viewBox="0 0 18 12">
+            <span style={{ paddingTop: 5 }}>9:41</span>
+            <span className="flex items-center gap-1.5" style={{ paddingTop: 5 }}>
+              <svg width="16" height="11" viewBox="0 0 18 12">
                 <rect x="0" y="7" width="3" height="5" rx="1" fill="#fff" />
                 <rect x="4.5" y="5" width="3" height="7" rx="1" fill="#fff" />
                 <rect x="9" y="2.5" width="3" height="9.5" rx="1" fill="#fff" />
                 <rect x="13.5" y="0" width="3" height="12" rx="1" fill="#fff" />
               </svg>
-              <Icon name="wifi" className="h-3 w-3 text-white" />
+              <Icon name="wifi" className="h-3.5 w-3.5 text-white" />
               <span
                 className="relative inline-block border"
-                style={{ width: 19, height: 10, borderRadius: 3, borderColor: "rgba(255,255,255,0.6)" }}
+                style={{ width: 22, height: 11, borderRadius: 3, borderColor: "rgba(255,255,255,0.6)" }}
               >
-                <span className="absolute rounded-[1px] bg-white" style={{ inset: "1.3px", width: "75%" }} />
+                <span className="absolute rounded-[1px] bg-white" style={{ inset: "1.5px", width: "75%" }} />
               </span>
             </span>
           </div>
           {/* Content */}
-          <div className="relative px-5 pb-8 pt-2" style={{ background: "linear-gradient(180deg,#0f2036,#0a1524)" }}>
+          <div className="relative px-6 pb-9 pt-2" style={{ background: "linear-gradient(180deg,#0f2036,#0a1524)" }}>
             {children}
           </div>
           {/* Home indicator */}
           <div
             className="absolute left-1/2 -translate-x-1/2 rounded-full bg-white/35"
-            style={{ bottom: 7, width: 96, height: 4, zIndex: 45 }}
+            style={{ bottom: 9, width: 116, height: 5, zIndex: 45 }}
           />
         </div>
       </div>
@@ -132,100 +133,73 @@ export function Portal() {
           </Reveal>
         </div>
 
-        {/* Right: 3 phone mockups — swipeable carousel on mobile, fan on desktop */}
-        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto px-10 pb-4 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
+        {/* Right: 2 phone mockups — swipeable carousel on mobile, fan on desktop */}
+        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-8 overflow-x-auto px-10 pb-4 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
 
           {/* Screen 1 — Plan selection */}
           <div data-phone className="relative z-10 shrink-0 snap-center lg:-rotate-6">
             <div className="absolute -inset-12 -z-10 rounded-full bg-dice-blue/10 blur-3xl" />
             <PhoneFrame>
-              <p className="mb-1 text-[11px] font-medium text-white/50">Welcome to</p>
-              <p className="mb-4 font-display text-base font-bold text-white">Dice WiFi Portal</p>
+              <p className="mb-1 text-xs font-medium text-white/50">Welcome to</p>
+              <p className="mb-5 font-display text-lg font-bold text-white">Dice WiFi Portal</p>
 
-              <div className="mb-1 rounded-2xl bg-white/8 p-3.5">
-                <p className="mb-3 text-[10px] uppercase tracking-wider text-white/40">Choose a Plan</p>
+              <div className="mb-1 rounded-2xl bg-white/8 p-4">
+                <p className="mb-3 text-[11px] uppercase tracking-wider text-white/40">Choose a Plan</p>
 
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="rounded-xl bg-dice-blue p-2.5 ring-1 ring-dice-cyan/50">
-                    <p className="font-display text-sm font-bold text-white">KSh 10</p>
-                    <p className="mt-0.5 text-[10px] text-dice-cyan">1 Hour</p>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="rounded-xl bg-dice-blue p-3 ring-1 ring-dice-cyan/50">
+                    <p className="font-display text-base font-bold text-white">KSh 10</p>
+                    <p className="mt-0.5 text-xs text-dice-cyan">1 Hour</p>
                   </div>
-                  <div className="rounded-xl bg-white/8 p-2.5">
-                    <p className="font-display text-sm font-bold text-white">KSh 50</p>
-                    <p className="mt-0.5 text-[10px] text-white/50">1 Day</p>
+                  <div className="rounded-xl bg-white/8 p-3">
+                    <p className="font-display text-base font-bold text-white">KSh 50</p>
+                    <p className="mt-0.5 text-xs text-white/50">1 Day</p>
                   </div>
-                  <div className="rounded-xl bg-white/8 p-2.5">
-                    <p className="font-display text-sm font-bold text-white">KSh 200</p>
-                    <p className="mt-0.5 text-[10px] text-white/50">1 Week</p>
+                  <div className="rounded-xl bg-white/8 p-3">
+                    <p className="font-display text-base font-bold text-white">KSh 200</p>
+                    <p className="mt-0.5 text-xs text-white/50">1 Week</p>
                   </div>
-                  <div className="rounded-xl bg-white/8 p-2.5">
-                    <p className="font-display text-sm font-bold text-white">KSh 700</p>
-                    <p className="mt-0.5 text-[10px] text-white/50">Monthly</p>
+                  <div className="rounded-xl bg-white/8 p-3">
+                    <p className="font-display text-base font-bold text-white">KSh 700</p>
+                    <p className="mt-0.5 text-xs text-white/50">Monthly</p>
                   </div>
                 </div>
               </div>
 
-              <button className="mt-3 w-full rounded-full bg-dice-blue py-2.5 text-xs font-semibold text-white">
+              <button className="mt-4 w-full rounded-full bg-dice-blue py-3 text-sm font-semibold text-white">
                 Pay with M-Pesa
               </button>
             </PhoneFrame>
           </div>
 
-          {/* Screen 2 — Return user login */}
-          <div data-phone className="relative z-20 shrink-0 snap-center lg:-ml-16 lg:mt-10 lg:rotate-2">
+          {/* Screen 2 — Active session */}
+          <div data-phone className="relative z-20 shrink-0 snap-center lg:-ml-20 lg:mt-16 lg:rotate-6">
             <PhoneFrame>
-              <p className="mb-1 text-[11px] font-medium text-white/50">Welcome back</p>
-              <p className="mb-4 font-display text-base font-bold text-white">Sign In to Connect</p>
+              <p className="mb-1 text-xs font-medium text-white/50">Wanjiru Kamau</p>
 
-              <div className="mb-3 flex gap-1 rounded-full bg-white/10 p-1">
-                <button className="flex-1 rounded-full bg-dice-blue py-2 text-xs font-semibold text-white">
-                  M-Pesa Code
-                </button>
-                <button className="flex-1 rounded-full py-2 text-xs text-white/50">
-                  Username
-                </button>
-              </div>
-
-              <div className="mb-1.5 rounded-2xl bg-white/8 px-4 py-3">
-                <p className="text-[10px] text-white/40">Transaction Code</p>
-                <p className="mt-1.5 font-mono text-base font-semibold tracking-wider text-white">RG4K5MNAB</p>
-              </div>
-              <p className="mb-4 text-[10px] text-white/35">From your M-Pesa SMS confirmation</p>
-
-              <button className="w-full rounded-full bg-dice-blue py-2.5 text-xs font-semibold text-white">
-                Connect Now
-              </button>
-            </PhoneFrame>
-          </div>
-
-          {/* Screen 3 — Active session */}
-          <div data-phone className="relative z-10 shrink-0 snap-center lg:-ml-16 lg:mt-20 lg:rotate-6">
-            <PhoneFrame>
-              <p className="mb-1 text-[11px] font-medium text-white/50">Wanjiru Kamau</p>
-
-              <div className="mb-4 mt-3 rounded-2xl bg-white/10 p-3.5">
-                <p className="text-[10px] uppercase tracking-wider text-white/40">Active Plan</p>
-                <p className="mt-1.5 font-display text-lg font-bold leading-tight text-white">Monthly · 30 Days</p>
-                <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/15">
+              <div className="mb-5 mt-3 rounded-2xl bg-white/10 p-4">
+                <p className="text-[11px] uppercase tracking-wider text-white/40">Active Plan</p>
+                <p className="mt-1.5 font-display text-xl font-bold leading-tight text-white">Monthly · 30 Days</p>
+                <div className="mt-3.5 h-2 w-full overflow-hidden rounded-full bg-white/15">
                   <span data-phone-bar className="block h-full w-0 rounded-full bg-linear-to-r from-dice-cyan to-white" />
                 </div>
-                <p className="mt-1.5 text-[10px] text-white/50">19 days remaining</p>
+                <p className="mt-1.5 text-xs text-white/50">19 days remaining</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                <div className="rounded-xl bg-white/8 p-3">
-                  <Icon name="device" className="h-4 w-4 text-dice-cyan" />
-                  <p className="mt-2 text-[10px] text-white/50">Devices</p>
-                  <p className="font-display text-sm font-bold text-white">3 / 5</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-xl bg-white/8 p-3.5">
+                  <Icon name="device" className="h-5 w-5 text-dice-cyan" />
+                  <p className="mt-2 text-xs text-white/50">Devices</p>
+                  <p className="font-display text-base font-bold text-white">3 / 5</p>
                 </div>
-                <div className="rounded-xl bg-white/8 p-3">
-                  <Icon name="bolt" className="h-4 w-4 text-dice-cyan" />
-                  <p className="mt-2 text-[10px] text-white/50">Speed</p>
-                  <p className="font-display text-sm font-bold text-white">15 Mbps</p>
+                <div className="rounded-xl bg-white/8 p-3.5">
+                  <Icon name="bolt" className="h-5 w-5 text-dice-cyan" />
+                  <p className="mt-2 text-xs text-white/50">Speed</p>
+                  <p className="font-display text-base font-bold text-white">15 Mbps</p>
                 </div>
               </div>
 
-              <button className="mt-3 w-full rounded-full bg-dice-blue py-2.5 text-xs font-semibold text-white">
+              <button className="mt-4 w-full rounded-full bg-dice-blue py-3 text-sm font-semibold text-white">
                 Renew Subscription
               </button>
             </PhoneFrame>
