@@ -1,4 +1,4 @@
-import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
+import { createHash, randomInt, randomUUID, timingSafeEqual } from "node:crypto";
 import type { NextFunction, Request, Response } from "express";
 
 /** Constant-time string comparison (via fixed-length digests, so
@@ -14,8 +14,8 @@ function safeEqual(a: string, b: string): boolean {
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME ?? "admin";
 let adminPassword = process.env.ADMIN_PASSWORD ?? "changeme123";
 
-const RECOVERY_CODE = process.env.ADMIN_RECOVERY_CODE ?? randomBytes(9).toString("base64url");
 const TOKEN_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
+const RESET_CODE_TTL_MS = 15 * 60 * 1000; // 15 minutes
 
 if (!process.env.ADMIN_PASSWORD) {
   console.warn(
@@ -23,15 +23,9 @@ if (!process.env.ADMIN_PASSWORD) {
   );
 }
 
-if (!process.env.ADMIN_RECOVERY_CODE) {
-  console.warn(
-    `[auth] ADMIN_RECOVERY_CODE is not set — generated one for this run: ${RECOVERY_CODE}\n` +
-      "         Use it on the admin login page's \"Forgot password\" form if you get locked out.\n" +
-      "         It resets on every restart unless you set ADMIN_RECOVERY_CODE in server/.env."
-  );
-}
-
 const tokens = new Map<string, number>(); // token -> expiry epoch ms
+
+let pendingReset: { code: string; expiresAt: number } | null = null;
 
 function pruneExpired(): void {
   const now = Date.now();
@@ -62,10 +56,21 @@ export function changePassword(currentPassword: string, newPassword: string, cur
   return true;
 }
 
-/** Recovery-code path for a lost password — logs out every session, since
-    whoever used this didn't have a valid one to begin with. */
-export function resetPasswordWithRecoveryCode(code: string, newPassword: string): boolean {
-  if (!safeEqual(code, RECOVERY_CODE)) return false;
+/** Generates a fresh 6-digit reset code, valid for 15 minutes, replacing
+    any code requested earlier. The caller is responsible for emailing it. */
+export function requestPasswordReset(): string {
+  const code = String(randomInt(100000, 1000000));
+  pendingReset = { code, expiresAt: Date.now() + RESET_CODE_TTL_MS };
+  return code;
+}
+
+/** Email-delivered reset code path for a lost password — single-use, expires
+    after 15 minutes, and logs out every session since whoever used this
+    didn't have a valid one to begin with. */
+export function resetPasswordWithCode(code: string, newPassword: string): boolean {
+  if (!pendingReset || pendingReset.expiresAt <= Date.now()) return false;
+  if (!safeEqual(code, pendingReset.code)) return false;
+  pendingReset = null;
   adminPassword = newPassword;
   tokens.clear();
   return true;
