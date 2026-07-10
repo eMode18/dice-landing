@@ -14,35 +14,44 @@ export function HowItWorks() {
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        "[data-progress-line]",
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          transformOrigin: "left center",
-          ease: "none",
-          scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top 70%",
-            end: "bottom 60%",
-            scrub: 0.6,
-          },
-        }
-      );
+      const mm = gsap.matchMedia();
 
-      gsap.utils.toArray<HTMLElement>("[data-step-dot]").forEach((dot, i) => {
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set("[data-progress-line]", { scaleX: 1, transformOrigin: "left center" });
+        gsap.set("[data-step-dot]", { scale: 1, opacity: 1 });
+      });
+
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
-          dot,
-          { scale: 0, opacity: 0 },
+          "[data-progress-line]",
+          { scaleX: 0 },
           {
-            scale: 1,
-            opacity: 1,
-            duration: 0.5,
-            ease: "back.out(2)",
-            scrollTrigger: { trigger: dot, start: "top 80%" },
-            delay: i * 0.05,
+            scaleX: 1,
+            transformOrigin: "left center",
+            ease: "none",
+            scrollTrigger: {
+              trigger: rootRef.current,
+              start: "top 70%",
+              end: "bottom 60%",
+              scrub: 0.6,
+            },
           }
         );
+
+        gsap.utils.toArray<HTMLElement>("[data-step-dot]").forEach((dot, i) => {
+          gsap.fromTo(
+            dot,
+            { scale: 0, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.5,
+              ease: "back.out(2)",
+              scrollTrigger: { trigger: dot, start: "top 120%" },
+              delay: i * 0.05,
+            }
+          );
+        });
       });
     },
     { scope: rootRef }

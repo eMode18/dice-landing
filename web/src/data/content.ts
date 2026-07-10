@@ -1,11 +1,9 @@
-import type { IconName } from "../components/ui/Icon";
-
 export const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Plans", href: "#plans" },
-  { label: "Features", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Home", href: "/" },
+  { label: "Plans", href: "/plans" },
+  { label: "Features", href: "/features" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "FAQ", href: "/faq" },
 ] as const;
 
 export const trustIndicators = [
@@ -13,51 +11,9 @@ export const trustIndicators = [
   { label: "Secure Connections", icon: "shield" },
 ] as const;
 
-export interface Plan {
-  name: string;
-  price: string;
-  period: string;
-  description: string;
-  features: string[];
-  icon: IconName;
-  popular?: boolean;
-}
-
-export const plans: Plan[] = [
-  {
-    name: "Starter",
-    price: "KSh 50",
-    period: "/ day",
-    description: "Perfect for a quick session on the go.",
-    features: ["1 Day Access", "1 Device", "Basic Speed"],
-    icon: "bolt",
-  },
-  {
-    name: "Weekly",
-    price: "KSh 200",
-    period: "/ week",
-    description: "Great for short stays and visiting projects.",
-    features: ["7 Days Access", "2 Devices", "Faster Speeds"],
-    icon: "refresh",
-    popular: true,
-  },
-  {
-    name: "Monthly",
-    price: "KSh 700",
-    period: "/ month",
-    description: "Our most popular plan for everyday life.",
-    features: ["30 Days Access", "Multiple Devices", "Unlimited Browsing"],
-    icon: "gauge",
-  },
-  {
-    name: "Premium Unlimited",
-    price: "KSh 1,500",
-    period: "/ month",
-    description: "Built for power users and growing teams.",
-    features: ["Unlimited Devices", "Maximum Speeds", "Priority Support"],
-    icon: "layers",
-  },
-];
+// Plans are no longer static — they're served by the backend (server/) and
+// fetched at runtime via SiteDataContext, so they stay in sync everywhere
+// they're shown (Plans section, the captive-portal mockup in Portal.tsx).
 
 export const features = [
   {
@@ -157,14 +113,14 @@ export const faqs = [
 
 export const footerLinks = {
   quickLinks: [
-    { label: "Home", href: "#home" },
-    { label: "Plans", href: "#plans" },
-    { label: "Features", href: "#features" },
-    { label: "How It Works", href: "#how-it-works" },
+    { label: "Home", href: "/" },
+    { label: "Plans", href: "/plans" },
+    { label: "Features", href: "/features" },
+    { label: "How It Works", href: "/how-it-works" },
   ],
   support: [
-    { label: "Help Center", href: "#faq" },
-    { label: "Contact Support", href: "#footer-contact" },
+    { label: "Help Center", href: "/faq" },
+    { label: "Contact Support", href: "/contact" },
     { label: "Service Status", href: "#" },
     { label: "Become a Partner", href: "#" },
   ],

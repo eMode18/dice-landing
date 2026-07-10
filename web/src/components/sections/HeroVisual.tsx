@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
 
 const ACCENT = "#0066ff";
 const GREEN = "#4ade80";
-const TOTAL = 27600;
+const TOTAL = 30250;
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const P = (t: number, a: number, b: number) => clamp((t - a) / (b - a), 0, 1);
@@ -364,12 +364,14 @@ export function HeroVisual() {
       let ccY: number;
       if (t < 1400) ccY = -100;
       else if (t < 2000) ccY = lerp(-100, 0, easeIO(P(t, 1400, 2000)));
-      else if (t < 3700) ccY = 0;
-      else if (t < 4100) ccY = lerp(0, -100, easeIO(P(t, 3700, 4100)));
+      else if (t < 6150) ccY = 0;
+      else if (t < 6750) ccY = lerp(0, -100, easeIO(P(t, 6150, 6750)));
       else ccY = -100;
       if (ccRef.current) ccRef.current.style.transform = `translateY(${ccY}%)`;
 
-      const tapAt = 2100, tapDur = 220;
+      // Pause after the panel opens (2000→2650) so it reads as a person
+      // looking at the screen before tapping, not an instant reflex.
+      const tapAt = 2650, tapDur = 220;
       const wifiOn = t >= tapAt + tapDur * 0.4;
       if (ccWifiRef.current) ccWifiRef.current.style.background = wifiOn ? ACCENT : "rgba(255,255,255,0.08)";
       ccWifiPathRefs.current.forEach((p) => { if (p) p.style.stroke = wifiOn ? "#fff" : "#9fb0c8"; });
@@ -384,10 +386,13 @@ export function HeroVisual() {
         ccTapRef.current.style.transform = `scale(${1 + 0.5 * tp})`;
       }
 
-      const scanOp = Math.min(P(t, 2420, 2620), 1 - P(t, 3020, 3220));
+      // Wi-Fi turns on ~90ms into the tap, then a beat before the scan
+      // starts, a real ~1.4s scanning hold (not a flash), then the found
+      // network fades in with a moment to register before it's tapped.
+      const scanOp = Math.min(P(t, 2900, 3150), 1 - P(t, 4550, 4800));
       if (scanRef.current) scanRef.current.style.opacity = String(scanOp);
-      const tap2At = 3500, tap2Dur = 150;
-      const netOp = Math.min(P(t, 3070, 3220), 1 - P(t, tap2At + tap2Dur, tap2At + tap2Dur + 180));
+      const tap2At = 5550, tap2Dur = 200;
+      const netOp = Math.min(P(t, 4700, 4950), 1 - P(t, tap2At + tap2Dur, tap2At + tap2Dur + 200));
       if (netRef.current) netRef.current.style.opacity = String(netOp);
       if (ccTap2Ref.current) {
         const tp2 = P(t, tap2At, tap2At + tap2Dur);
@@ -399,13 +404,13 @@ export function HeroVisual() {
 
       // screen opacities
       let lock: number;
-      if (t < 4100) lock = 1;
-      else if (t < 4500) lock = 1 - P(t, 4100, 4500);
-      else lock = P(t, 25800, 26300);
-      const portal = Math.min(P(t, 4100, 4500), 1 - P(t, 13100, 13500));
-      const modal = Math.min(P(t, 8950, 9350), 1 - P(t, 12950, 13350));
-      const success = Math.min(P(t, 13100, 13500), 1 - P(t, 17700, 18200));
-      const notifs = Math.min(P(t, 18200, 18700), 1 - P(t, 25600, 26100));
+      if (t < 6750) lock = 1;
+      else if (t < 7150) lock = 1 - P(t, 6750, 7150);
+      else lock = P(t, 28450, 28950);
+      const portal = Math.min(P(t, 6750, 7150), 1 - P(t, 15750, 16150));
+      const modal = Math.min(P(t, 11600, 12000), 1 - P(t, 15600, 16000));
+      const success = Math.min(P(t, 15750, 16150), 1 - P(t, 20350, 20850));
+      const notifs = Math.min(P(t, 20850, 21350), 1 - P(t, 28250, 28750));
       setScr(lockRef.current, lock);
       setScr(portalRef.current, portal);
       setScr(modalRef.current, modal);
@@ -417,9 +422,9 @@ export function HeroVisual() {
         const card = notifCardRefs.current[app.key];
         if (!card) return;
         const isLast = idx === visibleApps.length - 1;
-        const inStart = 18650 + idx * 300;
+        const inStart = 21300 + idx * 300;
         const inP = P(t, inStart, inStart + 520);
-        const clearStart = 22700 + idx * 460;
+        const clearStart = 25350 + idx * 460;
         const swipeP = P(t, clearStart, clearStart + 520);
         const collapseP = P(t, clearStart + 260, clearStart + 780);
         const enterOp = clamp(inP * 1.5, 0, 1);
@@ -443,15 +448,15 @@ export function HeroVisual() {
       });
 
       // status bar wifi + tooltip
-      const connected = t >= 13100 && t < 26300;
+      const connected = t >= 15750 && t < 28950;
       if (wifiWrapRef.current) {
         wifiWrapRef.current.style.width = connected ? "16px" : "0px";
         wifiWrapRef.current.style.marginLeft = connected ? "6px" : "0px";
       }
-      if (wifiTipRef.current) wifiTipRef.current.style.opacity = t >= 13600 && t < 18200 ? "1" : "0";
+      if (wifiTipRef.current) wifiTipRef.current.style.opacity = t >= 16250 && t < 20850 ? "1" : "0";
 
       // package highlight
-      const active = t > 4800 && t < 13100;
+      const active = t > 7450 && t < 15750;
       if (pkgRef.current) {
         pkgRef.current.style.background = active ? "linear-gradient(135deg,#2f6bff,#5a94ff)" : "rgba(255,255,255,0.04)";
         pkgRef.current.style.border = active ? "1px solid transparent" : "1px solid rgba(255,255,255,0.08)";
@@ -461,13 +466,13 @@ export function HeroVisual() {
 
       // phone number typing
       const full = "0712345678";
-      const typing = t >= 6000 && t < 8300;
+      const typing = t >= 8650 && t < 10950;
       if (phoneNumRef.current) {
-        if (t < 6000) {
+        if (t < 8650) {
           phoneNumRef.current.textContent = "07XX XXX XXX";
           phoneNumRef.current.style.color = "#5b6b82";
         } else {
-          const n = Math.floor(P(t, 6000, 8200) * full.length);
+          const n = Math.floor(P(t, 8650, 10850) * full.length);
           phoneNumRef.current.textContent = full.slice(0, n);
           phoneNumRef.current.style.color = "#eaf1ff";
         }
@@ -476,12 +481,12 @@ export function HeroVisual() {
 
       // pay press
       if (payRef.current) {
-        const pp = Math.sin(P(t, 8550, 8950) * Math.PI);
+        const pp = Math.sin(P(t, 11200, 11600) * Math.PI);
         payRef.current.style.transform = `scale(${1 - 0.05 * pp})`;
       }
 
       // PIN dots
-      const filled = t < 9550 ? 0 : Math.floor(P(t, 9550, 11450) * 4);
+      const filled = t < 12200 ? 0 : Math.floor(P(t, 12200, 14100) * 4);
       dotRefs.current.forEach((dot, i) => {
         if (!dot) return;
         dot.style.background = i < filled ? "#fff" : "transparent";
@@ -490,34 +495,34 @@ export function HeroVisual() {
 
       // send press + processing
       if (sendRef.current) {
-        const sp = Math.sin(P(t, 11700, 12050) * Math.PI);
+        const sp = Math.sin(P(t, 14350, 14700) * Math.PI);
         sendRef.current.style.transform = `scale(${1 - 0.08 * sp})`;
       }
-      const processing = t >= 11950 && t < 13050;
+      const processing = t >= 14600 && t < 15700;
       if (modalBodyRef.current) modalBodyRef.current.style.opacity = processing ? "0" : "1";
       if (processingRef.current) processingRef.current.style.opacity = processing ? "1" : "0";
 
       // success check pop
-      if (checkRef.current) checkRef.current.style.transform = `scale(${outBack(P(t, 13150, 13650))})`;
+      if (checkRef.current) checkRef.current.style.transform = `scale(${outBack(P(t, 15800, 16300))})`;
 
       // shared pose: idle -> spin -> fall flat -> hold -> stand back up
       const FX = 50, FZ = 40, FSC = 0.82, FTY = -8;
       let ry: number, rx: number, rz: number, ty: number, sc: number;
-      if (t < 15400) { ry = -13; rx = 3; rz = 0; ty = 0; sc = 1; }
-      else if (t < 16700) { ry = -13 + 360 * easeIO(P(t, 15400, 16700)); rx = 3; rz = 0; ty = 0; sc = 1; }
-      else if (t < 18400) {
-        const p = easeIO(P(t, 16700, 18400));
+      if (t < 18050) { ry = -13; rx = 3; rz = 0; ty = 0; sc = 1; }
+      else if (t < 19350) { ry = -13 + 360 * easeIO(P(t, 18050, 19350)); rx = 3; rz = 0; ty = 0; sc = 1; }
+      else if (t < 21050) {
+        const p = easeIO(P(t, 19350, 21050));
         ry = lerp(-13, 0, p); rx = lerp(3, FX, p); rz = lerp(0, FZ, p); ty = lerp(0, FTY, p); sc = lerp(1, FSC, p);
-      } else if (t < 21200) { ry = 0; rx = FX; rz = FZ; ty = FTY; sc = FSC; }
-      else if (t < 22500) {
-        const p = easeIO(P(t, 21200, 22500));
+      } else if (t < 23850) { ry = 0; rx = FX; rz = FZ; ty = FTY; sc = FSC; }
+      else if (t < 25150) {
+        const p = easeIO(P(t, 23850, 25150));
         ry = lerp(0, -13, p); rx = lerp(FX, 3, p); rz = lerp(FZ, 0, p); ty = lerp(FTY, 0, p); sc = lerp(FSC, 1, p);
       } else { ry = -13; rx = 3; rz = 0; ty = 0; sc = 1; }
 
       const pose = `perspective(1500px) translateY(${ty}px) rotateX(${rx}deg) rotateZ(${rz}deg) rotateY(${ry}deg) scale(${sc})`;
       if (deviceRef.current) {
         deviceRef.current.style.transform = pose;
-        const fallen = t >= 17800 && t < 21400;
+        const fallen = t >= 20450 && t < 24050;
         deviceRef.current.style.boxShadow = fallen
           ? "0 3px 0 #06070c,0 6px 0 #06070c,0 9px 0 #070811,0 12px 0 #070811,0 15px 0 #080916,0 18px 0 #080916,0 21px 0 #090b1a,0 24px 0 #090b1a, 0 48px 60px -12px rgba(0,0,0,0.7), inset 0 0 3px rgba(255,255,255,0.22)"
           : "0 50px 90px -30px rgba(0,0,0,0.75), inset 0 0 3px rgba(255,255,255,0.25), 1.5px 1.5px 0 rgba(0,0,0,0.45), 3px 3px 0 rgba(0,0,0,0.35), 4.5px 4.5px 0 rgba(0,0,0,0.22)";
@@ -526,20 +531,20 @@ export function HeroVisual() {
 
       // floating icon (only floatApp)
       if (iconRef.current) {
-        const start = 18700;
+        const start = 21350;
         const p = P(t, start, start + 520);
         const s = clamp(outBack(p), 0, 1.12);
         const dsc = (APPS.find((a) => a.key === FLOAT_APP)?.dscale ?? 1) * 0.7;
-        const gone = 1 - P(t, 20400, 20900);
+        const gone = 1 - P(t, 23050, 23550);
         iconRef.current.style.opacity = String(clamp(p * 1.6, 0, 1) * gone);
         iconRef.current.style.transform = `translateY(${lerp(48, 0, easeIO(p))}px) scale(${dsc * (0.12 + 0.88 * s)})`;
       }
 
       // WhatsApp badge count
       if (badgeRef.current) {
-        if (t >= 18700 && t < 20900) {
-          badgeRef.current.textContent = String(Math.min(1 + Math.floor((t - 18700) / 650), 9));
-          const since = (t - 18700) % 650;
+        if (t >= 21350 && t < 23550) {
+          badgeRef.current.textContent = String(Math.min(1 + Math.floor((t - 21350) / 650), 9));
+          const since = (t - 21350) % 650;
           badgeRef.current.style.transform = since < 170 ? `scale(${1 + 0.32 * (1 - since / 170)})` : "scale(1)";
         } else {
           badgeRef.current.textContent = "1";

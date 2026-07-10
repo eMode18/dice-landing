@@ -3,9 +3,12 @@ import { SectionHeading } from "../ui/SectionHeading";
 import { Reveal } from "../Reveal";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
-import { plans } from "../../data/content";
+import { toIconName } from "../ui/icons";
+import { useSiteData } from "../../context/useSiteData";
 
 export function Plans() {
+  const { plans, loading, error } = useSiteData();
+
   return (
     <section id="plans" className="relative py-20 sm:py-28 lg:py-32">
       <Container className="flex flex-col gap-12 sm:gap-16 lg:gap-20">
@@ -14,9 +17,25 @@ export function Plans() {
           subtitle="Flexible internet plans for every lifestyle — pick one in seconds, upgrade or cancel anytime."
         />
 
+        {error && !loading && (
+          <p className="text-center text-sm text-red-500 dark:text-red-400">
+            Unable to load plans right now. Please try again shortly.
+          </p>
+        )}
+
+        {loading ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 xl:grid-cols-4 xl:gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-105 animate-pulse rounded-[28px] border border-slate-200/80 bg-slate-100 dark:border-white/10 dark:bg-white/5"
+              />
+            ))}
+          </div>
+        ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 xl:grid-cols-4 xl:gap-6">
           {plans.map((plan, i) => (
-            <Reveal key={plan.name} delay={i * 0.06} className="h-full">
+            <Reveal key={plan.id} delay={i * 0.06} className="h-full">
               <article
                 className={`group relative flex h-full flex-col gap-6 overflow-hidden rounded-[28px] border px-7 py-9 transition-all duration-400 hover:-translate-y-2 sm:px-8 ${
                   plan.popular
@@ -36,7 +55,7 @@ export function Plans() {
                     plan.popular ? "bg-white/15 text-white" : "bg-dice-blue text-white"
                   }`}
                 >
-                  <Icon name={plan.icon} className="h-6 w-6" />
+                  <Icon name={toIconName(plan.icon, "bolt")} className="h-6 w-6" />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
@@ -69,7 +88,7 @@ export function Plans() {
                 </ul>
 
                 <Button
-                  href="#connect"
+                  href="/connect"
                   size="md"
                   variant={plan.popular ? "secondary" : "primary"}
                   className={`w-full justify-center ${
@@ -89,6 +108,7 @@ export function Plans() {
             </Reveal>
           ))}
         </div>
+        )}
       </Container>
     </section>
   );

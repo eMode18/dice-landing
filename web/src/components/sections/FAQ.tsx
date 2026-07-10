@@ -15,6 +15,14 @@ function FaqItem({ question, answer, isOpen, onToggle }: { question: string; ans
     () => {
       if (!bodyRef.current || !innerRef.current) return;
       const height = innerRef.current.offsetHeight;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (reduced) {
+        gsap.set(bodyRef.current, { height: isOpen ? height : 0 });
+        gsap.set(innerRef.current, { opacity: isOpen ? 1 : 0, y: 0 });
+        return;
+      }
+
       gsap.to(bodyRef.current, {
         height: isOpen ? height : 0,
         duration: 0.45,

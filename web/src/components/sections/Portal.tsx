@@ -4,6 +4,8 @@ import { Reveal } from "../Reveal";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 import { portalFeatures } from "../../data/content";
+import { useSiteData } from "../../context/useSiteData";
+import type { Plan } from "../../lib/api";
 
 const featureIcons = ["bolt", "card", "user", "gauge", "refresh"] as const;
 
@@ -72,7 +74,36 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** The captive-portal mockup's "Choose a Package" tiles — sourced from the
+    same plans data as the Plans section, so the two never drift apart. */
+function PackageGrid({ plans, loading }: { plans: Plan[]; loading: boolean }) {
+  if (loading || plans.length === 0) {
+    return (
+      <div className="mb-4 grid grid-cols-2 gap-2.5">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="h-13 animate-pulse rounded-xl bg-white/8" />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mb-4 grid grid-cols-2 gap-2.5">
+      {plans.slice(0, 4).map((plan) => (
+        <div key={plan.id} className={`rounded-xl p-3 ${plan.popular ? "bg-dice-blue ring-1 ring-dice-cyan/50" : "bg-white/8"}`}>
+          <p className="font-display text-sm font-bold text-white">{plan.price}</p>
+          <p className={`mt-0.5 text-[10px] ${plan.popular ? "text-dice-cyan" : "text-white/50"}`}>
+            {plan.period.replace(/^\/\s*/, "")}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Portal() {
+  const { plans, loading } = useSiteData();
+
   return (
     <section id="connect" className="relative isolate overflow-hidden py-20 sm:py-28 lg:py-32">
       <Container className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-12 xl:gap-20">
@@ -100,19 +131,21 @@ export function Portal() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <Button href="#plans" size="lg" className="mt-1 w-full sm:w-auto">
+            <Button href="/plans" size="lg" className="mt-1 w-full sm:w-auto">
               View Our Plans
               <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </Reveal>
         </div>
 
-        {/* Right: 2 phone mockups — swipeable carousel on mobile, fan on desktop.
+        {/* Right: 2 phone mockups — same fanned, rotated arrangement at every
+            breakpoint (only the phone width itself is responsive); a
+            swipeable carousel is available if it doesn't fully fit.
             Static (no float/entrance motion) on a fully transparent backdrop. */}
-        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-8 overflow-x-auto px-10 pb-16 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
+        <div className="scrollbar-none order-1 -mx-6 flex snap-x snap-mandatory items-start gap-0 overflow-x-auto px-10 pb-16 sm:-mx-8 sm:px-12 lg:order-2 lg:mx-0 lg:justify-center lg:px-0">
 
           {/* Screen 1 — the actual captive portal */}
-          <div className="relative z-10 shrink-0 snap-center lg:-rotate-6">
+          <div className="relative z-10 shrink-0 snap-center -rotate-6">
             <PhoneFrame>
               <div className="mb-3 flex items-center gap-2 rounded-full bg-white/8 px-3.5 py-2">
                 <Icon name="lock" className="h-3 w-3 shrink-0 text-emerald-400" />
@@ -129,29 +162,12 @@ export function Portal() {
                 </div>
               </div>
 
-              <p className="mb-2 text-[10px] uppercase tracking-wider text-white/40">Choose a Package</p>
-              <div className="mb-4 grid grid-cols-2 gap-2.5">
-                <div className="rounded-xl bg-dice-blue p-3 ring-1 ring-dice-cyan/50">
-                  <p className="font-display text-sm font-bold text-white">KSh 10</p>
-                  <p className="mt-0.5 text-[10px] text-dice-cyan">1 Hour</p>
-                </div>
-                <div className="rounded-xl bg-white/8 p-3">
-                  <p className="font-display text-sm font-bold text-white">KSh 50</p>
-                  <p className="mt-0.5 text-[10px] text-white/50">1 Day</p>
-                </div>
-                <div className="rounded-xl bg-white/8 p-3">
-                  <p className="font-display text-sm font-bold text-white">KSh 200</p>
-                  <p className="mt-0.5 text-[10px] text-white/50">1 Week</p>
-                </div>
-                <div className="rounded-xl bg-white/8 p-3">
-                  <p className="font-display text-sm font-bold text-white">KSh 700</p>
-                  <p className="mt-0.5 text-[10px] text-white/50">Monthly</p>
-                </div>
-              </div>
+              <p className="mb-2 text-[10px] uppercase tracking-wider text-white/50">Choose a Package</p>
+              <PackageGrid plans={plans} loading={loading} />
 
               <p className="mb-1.5 text-[11px] text-white/50">M-Pesa Phone Number</p>
               <div className="mb-4 rounded-xl border border-white/9 bg-white/8 px-3.5 py-3">
-                <span className="text-sm tracking-wider text-white/30">07XX XXX XXX</span>
+                <span className="text-sm tracking-wider text-white/60">07XX XXX XXX</span>
               </div>
 
               <button className="w-full rounded-full bg-dice-blue py-3 text-sm font-semibold text-white shadow-lg shadow-dice-blue/30">
@@ -161,10 +177,10 @@ export function Portal() {
           </div>
 
           {/* Screen 2 — a music app, running on the internet Dice provides */}
-          <div className="relative z-20 shrink-0 snap-center lg:-ml-20 lg:mt-16 lg:rotate-6">
+          <div className="relative z-20 shrink-0 snap-center -ml-20 mt-16 rotate-6">
             <PhoneFrame>
               <div className="flex h-full flex-col">
-                <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-wider text-white/40">
+                <p className="mb-4 text-center text-[11px] font-semibold uppercase tracking-wider text-white/50">
                   Now Playing
                 </p>
 
@@ -183,7 +199,7 @@ export function Portal() {
                 <div className="mb-1.5 h-1 w-full overflow-hidden rounded-full bg-white/15">
                   <span className="block h-full w-[38%] rounded-full bg-emerald-400" />
                 </div>
-                <div className="mb-6 flex items-center justify-between text-[10px] text-white/40">
+                <div className="mb-6 flex items-center justify-between text-[10px] text-white/50">
                   <span>1:24</span>
                   <span>3:42</span>
                 </div>

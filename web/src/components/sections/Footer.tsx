@@ -1,6 +1,7 @@
 import { Container } from "../ui/Container";
 import { Icon } from "../ui/Icon";
 import { footerLinks } from "../../data/content";
+import { useSiteData } from "../../context/useSiteData";
 
 const socials = [
   { label: "X / Twitter", icon: "spark" },
@@ -12,6 +13,8 @@ const socials = [
 const legal = ["Privacy Policy", "Terms of Service"];
 
 export function Footer() {
+  const { contact } = useSiteData();
+
   return (
     <footer
       id="footer-contact"
@@ -21,7 +24,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 pb-16 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-12">
           {/* Column 1 — Company info */}
           <div className="flex flex-col gap-5">
-            <a href="#home" className="flex items-center">
+            <a href="/" className="flex items-center">
               <img
                 src="/logo.png"
                 alt="Dice WiFi"
@@ -92,7 +95,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3.5 text-sm text-slate-600 dark:text-white/60">
               <li className="flex items-start gap-3">
                 <Icon name="headset" className="mt-0.5 h-4 w-4 shrink-0 text-dice-blue dark:text-dice-cyan" />
-                <span>+254 700 123 456</span>
+                <span>{contact?.phone ?? " "}</span>
               </li>
             </ul>
           </div>

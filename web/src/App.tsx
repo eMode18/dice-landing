@@ -9,10 +9,14 @@ import { Portal } from "./components/sections/Portal";
 import { FAQ } from "./components/sections/FAQ";
 import { FinalCTA } from "./components/sections/FinalCTA";
 import { Footer } from "./components/sections/Footer";
+import { SiteDataProvider } from "./context/SiteDataContext";
+import { AdminPage } from "./components/admin/AdminPage";
+import { SectionRouter } from "./components/SectionRouter";
 
-function App() {
+function LandingPage() {
   return (
-    <div className="relative min-h-screen font-body">
+    <SiteDataProvider>
+      <SectionRouter />
       <Navbar />
       <main>
         <Hero />
@@ -25,6 +29,16 @@ function App() {
         <FinalCTA />
       </main>
       <Footer />
+    </SiteDataProvider>
+  );
+}
+
+function App() {
+  const isAdmin = window.location.pathname.startsWith("/admin");
+
+  return (
+    <div className="relative min-h-screen font-body">
+      {isAdmin ? <AdminPage /> : <LandingPage />}
     </div>
   );
 }

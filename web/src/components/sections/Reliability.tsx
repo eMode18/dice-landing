@@ -44,7 +44,7 @@ const illustrations: Record<string, React.ReactNode> = {
         <path
           data-wave
           d="M0 60 C 30 35, 70 85, 100 60 S 170 35, 200 60"
-          stroke="#5ec8ff"
+          stroke="var(--color-dice-cyan)"
           strokeWidth="3"
           strokeLinecap="round"
           opacity="0.55"
@@ -59,41 +59,53 @@ export function Reliability() {
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-bar]").forEach((bar) => {
-        const target = Number(bar.dataset.h);
-        gsap.fromTo(
-          bar,
-          { height: "6%" },
-          {
-            height: `${target * 0.28}%`,
-            duration: 1.4,
-            ease: "elastic.out(1, 0.6)",
-            scrollTrigger: { trigger: bar, start: "top 90%" },
-          }
-        );
+      const mm = gsap.matchMedia();
+
+      // Reduced motion: bars sit at their resting height and the pulse/wave
+      // loops (which run forever, unlike a one-time reveal) don't run at all.
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.utils.toArray<HTMLElement>("[data-bar]").forEach((bar) => {
+          gsap.set(bar, { height: `${Number(bar.dataset.h) * 0.28}%` });
+        });
       });
 
-      gsap.to("[data-pulse]", {
-        scale: 1.5,
-        opacity: 0,
-        duration: 2.2,
-        ease: "power1.out",
-        repeat: -1,
-        transformOrigin: "center",
-      });
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.utils.toArray<HTMLElement>("[data-bar]").forEach((bar) => {
+          const target = Number(bar.dataset.h);
+          gsap.fromTo(
+            bar,
+            { height: "6%" },
+            {
+              height: `${target * 0.28}%`,
+              duration: 1.4,
+              ease: "elastic.out(1, 0.6)",
+              scrollTrigger: { trigger: bar, start: "top 130%" },
+            }
+          );
+        });
 
-      gsap.utils.toArray<SVGPathElement>("[data-wave]").forEach((path, i) => {
-        gsap.to(path, {
-          attr: {
-            d:
-              i === 0
-                ? "M0 50 C 30 80, 70 20, 100 50 S 170 80, 200 50"
-                : "M0 60 C 30 85, 70 35, 100 60 S 170 85, 200 60",
-          },
-          duration: 2.6 + i * 0.4,
-          ease: "sine.inOut",
+        gsap.to("[data-pulse]", {
+          scale: 1.5,
+          opacity: 0,
+          duration: 2.2,
+          ease: "power1.out",
           repeat: -1,
-          yoyo: true,
+          transformOrigin: "center",
+        });
+
+        gsap.utils.toArray<SVGPathElement>("[data-wave]").forEach((path, i) => {
+          gsap.to(path, {
+            attr: {
+              d:
+                i === 0
+                  ? "M0 50 C 30 80, 70 20, 100 50 S 170 80, 200 50"
+                  : "M0 60 C 30 85, 70 35, 100 60 S 170 85, 200 60",
+            },
+            duration: 2.6 + i * 0.4,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          });
         });
       });
     },

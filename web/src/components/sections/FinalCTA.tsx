@@ -33,11 +33,11 @@ export function FinalCTA() {
         </Reveal>
 
         <Reveal delay={0.22} className="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <Button href="#plans" variant="primary" size="lg">
+          <Button href="/plans" variant="primary" size="lg">
             Get Connected
             <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
-          <Button href="#footer-contact" variant="secondary" size="lg">
+          <Button href="/contact" variant="secondary" size="lg">
             Contact Us
           </Button>
         </Reveal>

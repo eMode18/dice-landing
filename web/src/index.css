@@ -50,7 +50,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .dark body {
@@ -73,6 +72,26 @@ h1, h2, h3, h4 {
 ::selection {
   background: var(--color-dice-blue);
   color: white;
+}
+
+/* Makes the light/dark toggle instant: applied for one frame while the
+   `dark` class swaps so no element's own transition-colors animates the
+   change, without removing those transitions for their normal hover use. */
+.theme-transitioning, .theme-transitioning * {
+  transition: none !important;
+}
+
+/* Global reduced-motion safety net: catches plain CSS animations/transitions
+   (Tailwind's animate-float/spin-slow/pulse-soft, the hero mockup's dw-*
+   keyframes) that live outside GSAP's own matchMedia-gated timelines. GSAP
+   tweens write inline styles directly and are unaffected by this. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .scrollbar-none {

@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "../../lib/gsap";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
@@ -12,7 +10,6 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const { isDark, toggle: toggleDark } = useDarkMode();
   const panelRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -28,34 +25,10 @@ export function Navbar() {
     };
   }, [open]);
 
-  useGSAP(
-    () => {
-      if (!panelRef.current || !linksRef.current) return;
-      const items = linksRef.current.children;
-
-      if (open) {
-        gsap.set(panelRef.current, { display: "flex" });
-        gsap.fromTo(
-          panelRef.current,
-          { xPercent: 100 },
-          { xPercent: 0, duration: 0.5, ease: "power3.out" }
-        );
-        gsap.fromTo(
-          items,
-          { opacity: 0, x: 28 },
-          { opacity: 1, x: 0, duration: 0.5, stagger: 0.06, delay: 0.15, ease: "power3.out" }
-        );
-      } else {
-        gsap.to(panelRef.current, {
-          xPercent: 100,
-          duration: 0.4,
-          ease: "power3.in",
-          onComplete: () => gsap.set(panelRef.current, { display: "none" }),
-        });
-      }
-    },
-    { dependencies: [open] }
-  );
+  useEffect(() => {
+    if (!panelRef.current) return;
+    panelRef.current.style.display = open ? "flex" : "none";
+  }, [open]);
 
   return (
     <>
@@ -67,7 +40,7 @@ export function Navbar() {
       }`}
     >
       <Container className="flex items-center justify-between py-2">
-        <a href="#home" className="flex items-center" aria-label="Dice WiFi home">
+        <a href="/" className="flex items-center" aria-label="Dice WiFi home">
           <img src="/logo.png" alt="Dice WiFi" className="h-12 w-auto sm:h-14 dark:brightness-0 dark:invert" />
         </a>
 
@@ -92,7 +65,7 @@ export function Navbar() {
           >
             <Icon name={isDark ? "sun" : "moon"} className="h-[1.05rem] w-[1.05rem]" />
           </button>
-          <Button href="#plans" size="md">
+          <Button href="/plans" size="md">
             Get Connected
             <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
           </Button>
@@ -129,7 +102,7 @@ export function Navbar() {
         className="fixed inset-y-0 right-0 z-40 hidden w-[84%] max-w-sm flex-col gap-8 bg-white/95 px-8 pb-10 pt-28 shadow-2xl backdrop-blur-2xl dark:bg-dice-ink/95 lg:hidden"
         style={{ display: "none" }}
       >
-        <div ref={linksRef} className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -141,7 +114,7 @@ export function Navbar() {
             </a>
           ))}
         </div>
-        <Button href="#plans" size="lg" className="w-full" onClick={() => setOpen(false)}>
+        <Button href="/plans" size="lg" className="w-full" onClick={() => setOpen(false)}>
           Get Connected
           <Icon name="arrowRight" className="h-4 w-4" />
         </Button>
