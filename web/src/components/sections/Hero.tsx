@@ -38,7 +38,7 @@ export function Hero() {
   );
 
   return (
-    <section id="home" ref={rootRef} className="relative isolate overflow-hidden pb-6 pt-[96px] sm:pb-10 sm:pt-[104px] xl:pb-8 xl:pt-[112px]">
+    <section id="home" ref={rootRef} className="relative isolate overflow-hidden pb-6 pt-[96px] sm:pb-10 sm:pt-[104px] lg:pb-8 lg:pt-[112px]">
       {/* Soft blue wash behind the visual, as in the mockup */}
       <div
         aria-hidden
@@ -46,13 +46,14 @@ export function Hero() {
       />
 
       {/* Phones/tablets: copy → CTAs → image → features, so the product shows on
-          the first screen. Desktop (xl): copy and features stacked on the left,
-          the image spanning both rows on the right. */}
-      <Container className="grid grid-cols-1 items-center gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:grid-rows-[auto_auto] xl:gap-x-4 xl:gap-y-12">
-        <div className="flex flex-col items-start xl:col-start-1 xl:row-start-1 xl:self-end">
+          the first screen. Small laptops (lg): copy beside the image, features in
+          a full-width row below. Desktop (xl): copy and features stacked on the
+          left, the image spanning both rows on the right. */}
+      <Container className="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:gap-x-4 xl:gap-y-12">
+        <div className="flex flex-col items-start lg:col-start-1 lg:row-start-1 xl:self-end">
           <h1
             data-hero-in
-            className="text-balance font-display text-[clamp(2rem,8.6vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.025em] text-dice-navy dark:text-white xl:max-w-[13ch] xl:text-[3.6rem]"
+            className="text-balance font-display text-[clamp(2rem,8.6vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.025em] text-dice-navy dark:text-white lg:text-[2.85rem] xl:max-w-[13ch] xl:text-[3.6rem]"
           >
             Stay connected wherever you are
           </h1>
@@ -73,7 +74,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div data-hero-visual className="relative mx-auto w-full max-w-[640px] xl:col-start-2 xl:row-span-2 xl:row-start-1 xl:-mr-16 xl:max-w-none">
+        <div data-hero-visual className="relative mx-auto w-full max-w-[640px] lg:col-start-2 lg:row-start-1 lg:-mr-6 lg:max-w-none xl:row-span-2 xl:-mr-16">
           <img
             src={heroImage}
             width={1200}
@@ -85,7 +86,7 @@ export function Hero() {
           />
         </div>
 
-        <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3 xl:col-start-1 xl:row-start-2 xl:w-[630px] xl:self-start">
+        <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3 lg:col-span-2 lg:row-start-2 xl:col-span-1 xl:col-start-1 xl:w-[630px] xl:self-start">
           {heroFeatures.map((item) => (
             <li data-hero-in key={item.title} className="flex items-start gap-2.5">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-dice-accent shadow-[0_4px_14px_-6px_rgba(15,31,69,0.18)] dark:border-white/10 dark:bg-white/5 dark:text-dice-cyan">

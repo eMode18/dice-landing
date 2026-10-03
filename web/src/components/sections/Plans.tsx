@@ -8,9 +8,9 @@ import { CarouselDots } from "../ui/CarouselDots";
 import { useSiteData } from "../../context/useSiteData";
 import { useSnapIndex } from "../../lib/useSnapIndex";
 /* Phones: a horizontal swipe row (scroll-snap, next card peeking) that bleeds
-   to the screen edge. sm: 2×2 grid. xl: 4 columns. */
+   to the screen edge. sm: 2×2 grid. lg: 4 columns. */
 const ROW =
-  "relative -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-6 pt-3 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 xl:grid-cols-4";
+  "relative -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-6 pt-3 scrollbar-none sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4";
 const CELL = "w-[82%] shrink-0 snap-center sm:w-auto";
 
 export function Plans() {
@@ -57,7 +57,7 @@ export function Plans() {
             {plans.map((plan, i) => (
               <Reveal key={plan.id} delay={i * 0.06} className={`${CELL} h-auto ${plan.popular ? "order-first sm:order-none" : ""}`}>
                 <article
-                  className={`relative flex h-full flex-col rounded-2xl border bg-white px-6 pb-6 pt-7 transition-all duration-300 hover:-translate-y-1 dark:bg-white/3 ${
+                  className={`relative flex h-full flex-col rounded-2xl border bg-white px-6 pb-6 pt-7 lg:px-5 xl:px-6 transition-all duration-300 hover:-translate-y-1 dark:bg-white/3 ${
                     plan.popular
                       ? "border-dice-accent shadow-[0_18px_40px_-20px_rgba(31,107,255,0.45)] ring-1 ring-dice-accent dark:border-dice-cyan/70 dark:ring-dice-cyan/40"
                       : "border-slate-200/90 hover:shadow-[0_18px_40px_-24px_rgba(15,31,69,0.25)] dark:border-white/10"
@@ -71,7 +71,7 @@ export function Plans() {
 
                   <h3 className="font-body text-[0.95rem] font-medium text-slate-700 dark:text-slate-300">{plan.name}</h3>
                   <p className="mt-1.5 flex items-baseline gap-1.5">
-                    <span className="whitespace-nowrap font-display text-[1.75rem] font-bold tracking-[-0.02em] text-dice-navy dark:text-white">
+                    <span className="whitespace-nowrap font-display text-[1.6rem] font-bold sm:text-[1.75rem] lg:text-[1.5rem] xl:text-[1.75rem] tracking-[-0.02em] text-dice-navy dark:text-white">
                       {plan.price}
                     </span>
                     <span className="whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">{plan.period}</span>

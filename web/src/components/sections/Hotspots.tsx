@@ -59,9 +59,9 @@ export function Hotspots() {
     <section id="hotspots" className="relative scroll-mt-16 py-10 sm:py-14">
       <Container>
         {/* Phones/tablets: copy + search full width, then map and town list side
-            by side. xl: three columns. */}
-        <Reveal className="grid grid-cols-2 items-center gap-x-4 gap-y-8 rounded-[28px] bg-dice-sky px-5 py-9 sm:gap-x-8 sm:px-10 sm:py-12 xl:grid-cols-[1.35fr_0.8fr_0.7fr] xl:gap-8 xl:px-12 dark:bg-white/4 dark:ring-1 dark:ring-white/10">
-          <div className="col-span-2 flex flex-col gap-3 xl:col-span-1">
+            by side. lg: three columns. */}
+        <Reveal className="grid grid-cols-2 items-center gap-x-4 gap-y-8 rounded-[28px] bg-dice-sky px-5 py-9 sm:gap-x-8 sm:px-10 sm:py-12 lg:grid-cols-[1.35fr_0.8fr_0.7fr] lg:gap-8 lg:px-10 xl:px-12 dark:bg-white/4 dark:ring-1 dark:ring-white/10">
+          <div className="col-span-2 flex flex-col gap-3 lg:col-span-1">
             <h2 className="text-balance font-display text-[1.9rem] font-semibold leading-[1.15] text-dice-navy dark:text-white sm:text-[2.35rem]">
               Find a hotspot near you
             </h2>

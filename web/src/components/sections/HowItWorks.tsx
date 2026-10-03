@@ -15,17 +15,22 @@ function keepMpesa(text: string) {
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="relative scroll-mt-16 py-12 sm:py-14 lg:py-16">
-      <Container className="grid grid-cols-1 items-center gap-10 sm:gap-12 xl:grid-cols-[1.25fr_1fr] xl:gap-10">
-        <div className="flex flex-col gap-8 sm:gap-12">
+      {/* Phones/tablets: heading, steps, illustration stacked. Small laptops (lg):
+          heading beside the illustration, steps in a full-width row below (the
+          wrapper becomes display:contents so its children join the grid).
+          Desktop (xl): heading + steps on the left, illustration on the right. */}
+      <Container className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-[1fr_minmax(0,400px)] lg:gap-x-10 lg:gap-y-8 xl:grid-cols-[1.25fr_1fr] xl:gap-10">
+        <div className="flex flex-col gap-8 sm:gap-12 lg:contents xl:col-start-1 xl:row-start-1 xl:flex">
           <SectionHeading
             title="How it works"
             subtitle="Connecting is quick and easy. Just a few taps and you're online."
+            className="lg:col-start-1 lg:row-start-1"
           />
 
           <Reveal
             as="ol"
             stagger
-            className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-slate-200 dark:sm:divide-white/10"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-0 lg:col-span-2 lg:row-start-2 sm:divide-x sm:divide-slate-200 dark:sm:divide-white/10"
           >
             {/* Phones: compact row (icon with its number badge on the corner, text
                 beside it). sm+: badge and icon side by side above the text. */}
@@ -50,7 +55,7 @@ export function HowItWorks() {
 
         {/* The illustration has a soft white halo baked into its edges, so it
             always sits on a light panel — that keeps it seamless in dark mode. */}
-        <Reveal delay={0.1} className="relative mx-auto w-full max-w-[420px] xl:max-w-[520px]">
+        <Reveal delay={0.1} className="relative mx-auto w-full max-w-[420px] lg:col-start-2 lg:row-start-1 xl:max-w-[520px]">
           <div
             aria-hidden
             className="absolute inset-x-[4%] inset-y-[6%] -z-0 rounded-[48%_52%_40%_60%/55%_45%_55%_45%] bg-dice-sky dark:bg-[#dfe9fb]"
