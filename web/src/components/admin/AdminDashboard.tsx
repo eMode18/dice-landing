@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
+import { Logo } from "../ui/Logo";
 import { api, clearStoredToken, type Plan } from "../../lib/api";
 import { PlanCard } from "./PlanCard";
 import { StatusPill } from "./StatusPill";
@@ -134,7 +135,7 @@ export function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-dice-ink/70">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4 sm:px-10">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="Dice WiFi" className="h-8 w-auto dark:brightness-0 dark:invert" />
+            <Logo className="h-9" />
             <span className="rounded-full bg-dice-blue/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-dice-blue dark:bg-dice-cyan/10 dark:text-dice-cyan">
               Admin
             </span>
