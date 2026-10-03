@@ -40,24 +40,24 @@ function FaqItem({ question, answer, isOpen, onToggle }: { question: string; ans
   );
 
   return (
-    <div className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${isOpen ? "border-dice-blue/30 bg-white shadow-[0_22px_60px_-30px_rgba(0,102,255,0.35)] dark:border-dice-cyan/30 dark:bg-white/10 dark:shadow-[0_22px_60px_-30px_rgba(0,0,0,0.5)]" : "border-slate-200/70 bg-white/60 dark:border-white/10 dark:bg-white/5"}`}>
+    <div className="border-b border-slate-200 dark:border-white/10">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left sm:px-7 sm:py-6"
+        className="flex w-full items-center justify-between gap-6 py-5 text-left sm:py-6"
       >
-        <span className="font-display text-base font-semibold text-dice-ink dark:text-white sm:text-lg">{question}</span>
+        <span className="font-display text-[0.98rem] font-semibold text-dice-navy dark:text-white sm:text-[1.05rem]">{question}</span>
         <span
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-            isOpen ? "rotate-180 border-dice-blue bg-dice-blue text-white" : "border-slate-200 text-slate-500 dark:border-white/15 dark:text-slate-400"
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+            isOpen ? "rotate-180 bg-dice-accent text-white" : "bg-dice-sky text-dice-accent dark:bg-white/6 dark:text-dice-cyan"
           }`}
         >
           <Icon name="chevron" className="h-4 w-4" />
         </span>
       </button>
-      <div ref={bodyRef} className="h-0 overflow-hidden px-5 sm:px-7">
-        <div ref={innerRef} className="pb-6 text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-[0.95rem]">
+      <div ref={bodyRef} className="h-0 overflow-hidden">
+        <div ref={innerRef} className="max-w-2xl pb-6 pr-12 text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-[0.95rem]">
           {answer}
         </div>
       </div>
@@ -69,25 +69,25 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-20 sm:py-28 lg:py-32">
-      <Container className="mx-auto flex max-w-3xl flex-col gap-12 sm:gap-16">
+    <section id="faq" className="relative scroll-mt-16 py-12 sm:py-14 lg:py-16">
+      <Container className="grid grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:gap-16">
         <SectionHeading
-          title="Questions? We've Got Answers"
-          subtitle="Everything you need to know about getting connected, staying secure, and managing your plan."
+          title="Questions? We've got answers"
+          subtitle="Everything you need to know about getting connected and managing your pass."
+          className="lg:sticky lg:top-28 lg:self-start"
         />
 
-        <div className="flex flex-col gap-3.5">
+        <Reveal stagger className="flex flex-col border-t border-slate-200 dark:border-white/10">
           {faqs.map((faq, i) => (
-            <Reveal key={faq.question} delay={i * 0.05}>
-              <FaqItem
-                question={faq.question}
-                answer={faq.answer}
-                isOpen={openIndex === i}
-                onToggle={() => setOpenIndex((current) => (current === i ? null : i))}
-              />
-            </Reveal>
+            <FaqItem
+              key={faq.question}
+              question={faq.question}
+              answer={faq.answer}
+              isOpen={openIndex === i}
+              onToggle={() => setOpenIndex((current) => (current === i ? null : i))}
+            />
           ))}
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

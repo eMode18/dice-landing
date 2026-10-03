@@ -181,7 +181,7 @@ export function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               </span>
               <div>
                 <h2 className="font-display text-lg font-semibold text-dice-ink dark:text-white">Plans</h2>
-                <p className="text-sm text-slate-500 dark:text-white/65">Powers the Plans section and the portal mockup.</p>
+                <p className="text-sm text-slate-500 dark:text-white/65">Powers the Plans section on the landing page.</p>
               </div>
             </div>
             <Button

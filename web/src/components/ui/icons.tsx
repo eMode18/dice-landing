@@ -133,6 +133,41 @@ export const paths: Record<string, React.ReactElement> = {
     />
   ),
   plus: <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />,
+  pin: (
+    <path
+      d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  phone: (
+    <path
+      d="M8 2.5h8A1.5 1.5 0 0 1 17.5 4v16a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 20V4A1.5 1.5 0 0 1 8 2.5ZM11 18.5h2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  call: (
+    <path
+      d="M5 4h3.5l1.5 4-2 1.5a11 11 0 0 0 6.5 6.5l1.5-2 4 1.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  mail: (
+    <path
+      d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm-.5 1 8.5 6.5L20.5 7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  shieldCheck: (
+    <path
+      d="M12 3 4.5 6v5.2c0 4.6 3.2 8.9 7.5 10.3 4.3-1.4 7.5-5.7 7.5-10.3V6L12 3Zm-3.2 9.2 2.3 2.3 4.3-4.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
   alert: (
     <path
       d="M12 9v4m0 4h.01M10.3 3.9 2.5 17.5A1.5 1.5 0 0 0 3.8 20h16.4a1.5 1.5 0 0 0 1.3-2.5L13.7 3.9a1.5 1.5 0 0 0-2.6 0Z"

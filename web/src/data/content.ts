@@ -1,81 +1,69 @@
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Plans", href: "/plans" },
-  { label: "Features", href: "/features" },
-  { label: "How It Works", href: "/how-it-works" },
+  { label: "How it works", href: "/how-it-works" },
+  { label: "Hotspots", href: "/hotspots" },
   { label: "FAQ", href: "/faq" },
 ] as const;
 
-export const trustIndicators = [
-  { label: "Instant Activation", icon: "bolt" },
-  { label: "Secure Connections", icon: "shield" },
+export const heroFeatures = [
+  { title: "Fast & Reliable", description: "Stable connections where it matters.", icon: "bolt" },
+  { title: "Wide Coverage", description: "Hotspots in towns, markets and public spaces.", icon: "pin" },
+  { title: "Secure Access", description: "Safe and encrypted browsing.", icon: "shieldCheck" },
 ] as const;
 
 // Plans are no longer static — they're served by the backend (server/) and
-// fetched at runtime via SiteDataContext, so they stay in sync everywhere
-// they're shown (Plans section, the captive-portal mockup in Portal.tsx).
-
-export const features = [
-  {
-    title: "Lightning Fast Speeds",
-    description: "Experience smooth browsing, streaming, gaming, and remote work.",
-    icon: "bolt",
-  },
-  {
-    title: "Instant Access",
-    description: "Connect and start browsing within seconds without complicated setup.",
-    icon: "spark",
-  },
-  {
-    title: "Secure Connections",
-    description: "Your internet sessions are protected using modern security standards.",
-    icon: "shield",
-  },
-] as const;
-
-export const reliability = [
-  {
-    title: "Reliable Speeds",
-    description: "Optimized network performance throughout the day, every day.",
-    icon: "gauge",
-  },
-  {
-    title: "Instant Activation",
-    description: "Purchase a plan and start browsing immediately — no waiting around.",
-    icon: "bolt",
-  },
-  {
-    title: "Stable Connections",
-    description: "Engineered to keep you online when it matters most.",
-    icon: "wave",
-  },
-] as const;
+// fetched at runtime via SiteDataContext, so admins can edit them.
 
 export const steps = [
   {
-    title: "Connect to Dice WiFi",
-    description: "Find a Dice hotspot nearby and join the network from your device.",
+    title: "Find a hotspot",
+    description: "Look for Dice WiFi hotspots in your area.",
+    icon: "wifi",
   },
   {
-    title: "Open the Login Portal",
-    description: "Your browser automatically redirects to the Dice access portal.",
+    title: "Choose a plan",
+    description: "Pick the plan that suits your needs and pay via M-Pesa.",
+    icon: "phone",
   },
   {
-    title: "Choose Your Plan",
-    description: "Pick the subscription that matches how you want to get online.",
-  },
-  {
-    title: "Start Browsing",
-    description: "You're connected — enjoy fast, secure internet in seconds.",
+    title: "Get connected",
+    description: "Enter your details and you're online!",
+    icon: "check",
   },
 ] as const;
 
-export const portalFeatures = [
-  "Plans from KSh 10",
-  "Pay via M-Pesa",
-  "Login with Code",
-  "Monitor Your Session",
-  "Renew Anytime",
+/** Towns with Dice hotspots. `featured` towns are listed (and pinned on the
+    map) by default; the rest appear under "View all locations". Coordinates
+    are only used to place map pins. */
+export const hotspotLocations = [
+  { town: "Nairobi", lat: -1.29, lon: 36.82, featured: true },
+  { town: "Mombasa", lat: -4.04, lon: 39.67, featured: true },
+  { town: "Kisumu", lat: -0.09, lon: 34.76, featured: true },
+  { town: "Eldoret", lat: 0.51, lon: 35.27, featured: true },
+  { town: "Nakuru", lat: -0.3, lon: 36.07, featured: false },
+  { town: "Thika", lat: -1.03, lon: 37.07, featured: false },
+  { town: "Machakos", lat: -1.52, lon: 37.26, featured: false },
+  { town: "Nyeri", lat: -0.42, lon: 36.95, featured: false },
+] as const;
+
+// Placeholder testimonials from the design mockup — replace with real reviews.
+export const testimonials = [
+  {
+    quote: "Dice WiFi is a lifesaver! Fast, reliable and easy to use. I can work from anywhere now.",
+    name: "Aisha Wanjiku",
+    role: "Student, Nairobi",
+  },
+  {
+    quote: "Perfect for business. The connection is always stable and the speeds are great.",
+    name: "Brian Otieno",
+    role: "Small Business Owner, Kisumu",
+  },
+  {
+    quote: "Affordable plans and great coverage. I use it every day at the matatu stage.",
+    name: "Mercy Njeri",
+    role: "Entrepreneur, Mombasa",
+  },
 ] as const;
 
 export const faqs = [
@@ -114,14 +102,11 @@ export const faqs = [
 export const footerLinks = {
   quickLinks: [
     { label: "Home", href: "/" },
+    { label: "Hotspots", href: "/hotspots" },
     { label: "Plans", href: "/plans" },
-    { label: "Features", href: "/features" },
-    { label: "How It Works", href: "/how-it-works" },
-  ],
-  support: [
-    { label: "Help Center", href: "/faq" },
-    { label: "Contact Support", href: "/contact" },
-    { label: "Service Status", href: "#" },
-    { label: "Become a Partner", href: "#" },
+    { label: "FAQ", href: "/faq" },
   ],
 } as const;
+
+// Placeholder support email from the design mockup — confirm before launch.
+export const supportEmail = "hello@dicewifi.co.ke";

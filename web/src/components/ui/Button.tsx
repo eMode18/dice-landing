@@ -1,7 +1,7 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
-type Variant = "primary" | "secondary";
-type Size = "md" | "lg";
+type Variant = "primary" | "secondary" | "outline";
+type Size = "sm" | "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -11,16 +11,19 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "group relative inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-dice-blue whitespace-nowrap disabled:pointer-events-none disabled:opacity-50";
+  "group relative inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-dice-accent whitespace-nowrap disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-dice-blue text-white shadow-[0_8px_30px_-8px_rgba(0,102,255,0.65)] hover:shadow-[0_12px_40px_-6px_rgba(0,102,255,0.8)] hover:-translate-y-0.5 active:translate-y-0",
+    "bg-dice-accent text-white shadow-[0_10px_24px_-10px_rgba(31,107,255,0.7)] hover:bg-dice-accent-dark hover:-translate-y-0.5 active:translate-y-0",
   secondary:
     "bg-white text-dice-dark border border-slate-200 shadow-sm hover:border-dice-blue/40 hover:-translate-y-0.5 active:translate-y-0",
+  outline:
+    "bg-white text-dice-accent border border-dice-accent/70 hover:bg-dice-accent hover:text-white hover:border-dice-accent dark:bg-transparent dark:text-white dark:border-white/25 dark:hover:bg-dice-accent dark:hover:border-dice-accent",
 };
 
 const sizes: Record<Size, string> = {
+  sm: "px-5 py-2.5 text-sm",
   md: "px-6 py-3 text-sm sm:text-[0.95rem]",
   lg: "px-7 sm:px-8 py-3.5 sm:py-4 text-base",
 };
@@ -37,7 +40,12 @@ export function Button({
 
   if (href) {
     return (
-      <a href={href} className={classes}>
+      <a
+        href={href}
+        className={classes}
+        aria-label={rest["aria-label"]}
+        onClick={rest.onClick as unknown as MouseEventHandler<HTMLAnchorElement> | undefined}
+      >
         <span className="inline-flex items-center gap-2 whitespace-nowrap">{children}</span>
       </a>
     );

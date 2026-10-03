@@ -1,13 +1,10 @@
 import { Navbar } from "./components/sections/Navbar";
 import { Hero } from "./components/sections/Hero";
 import { Plans } from "./components/sections/Plans";
-import { WhyChooseUs } from "./components/sections/WhyChooseUs";
-import { Reliability } from "./components/sections/Reliability";
 import { HowItWorks } from "./components/sections/HowItWorks";
-
-import { Portal } from "./components/sections/Portal";
+import { Hotspots } from "./components/sections/Hotspots";
+import { Testimonials } from "./components/sections/Testimonials";
 import { FAQ } from "./components/sections/FAQ";
-import { FinalCTA } from "./components/sections/FinalCTA";
 import { Footer } from "./components/sections/Footer";
 import { SiteDataProvider } from "./context/SiteDataContext";
 import { AdminPage } from "./components/admin/AdminPage";
@@ -17,18 +14,18 @@ function LandingPage() {
   return (
     <SiteDataProvider>
       <SectionRouter />
-      <Navbar />
-      <main>
-        <Hero />
-        <Plans />
-        <WhyChooseUs />
-        <Reliability />
-        <HowItWorks />
-        <Portal />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
+      <div className="bg-white text-dice-navy dark:bg-dice-night dark:text-white">
+        <Navbar />
+        <main>
+          <Hero />
+          <Plans />
+          <HowItWorks />
+          <Hotspots />
+          <Testimonials />
+          <FAQ />
+        </main>
+        <Footer />
+      </div>
     </SiteDataProvider>
   );
 }

@@ -11,31 +11,23 @@ interface SectionHeadingProps {
 export function SectionHeading({
   title,
   subtitle,
-  align = "center",
+  align = "left",
   className = "",
 }: SectionHeadingProps) {
   const isCenter = align === "center";
 
   return (
-    <div
-      className={`flex flex-col gap-4 sm:gap-5 ${isCenter ? "items-center text-center" : "items-start text-left"} ${className}`}
+    <Reveal
+      className={`flex flex-col gap-3 ${isCenter ? "items-center text-center" : "items-start text-left"} ${className}`}
     >
-      <Reveal delay={0.08}>
-        <h2 className="max-w-3xl text-[2rem] leading-[1.12] font-semibold text-dice-ink dark:text-white sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
-          {title}
-        </h2>
-      </Reveal>
+      <h2 className="max-w-xl text-balance font-display text-[1.9rem] leading-[1.15] font-semibold text-dice-navy dark:text-white sm:text-[2.35rem]">
+        {title}
+      </h2>
       {subtitle && (
-        <Reveal delay={0.16}>
-          <p
-            className={`max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg ${
-              isCenter ? "mx-auto" : ""
-            }`}
-          >
-            {subtitle}
-          </p>
-        </Reveal>
+        <p className={`max-w-md text-[0.95rem] leading-relaxed text-slate-500 dark:text-slate-400 ${isCenter ? "mx-auto" : ""}`}>
+          {subtitle}
+        </p>
       )}
-    </div>
+    </Reveal>
   );
 }

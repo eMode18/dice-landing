@@ -2,17 +2,43 @@ import { useEffect, useRef, useState } from "react";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
+import { Logo } from "../ui/Logo";
 import { navLinks } from "../../data/content";
+import { pathToSectionId } from "../../lib/routes";
 import { useDarkMode } from "../../lib/theme";
+
+/** Which nav link's section is currently under the header. */
+function useActiveHref() {
+  const [active, setActive] = useState<string>("/");
+
+  useEffect(() => {
+    function update() {
+      let current = "/";
+      for (const link of navLinks) {
+        const id = pathToSectionId[link.href];
+        if (!id || id === "home") continue;
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) current = link.href;
+      }
+      setActive(current);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  return active;
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { isDark, toggle: toggleDark } = useDarkMode();
   const panelRef = useRef<HTMLDivElement>(null);
+  const active = useActiveHref();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -30,68 +56,73 @@ export function Navbar() {
     panelRef.current.style.display = open ? "flex" : "none";
   }, [open]);
 
+  const themeButton = (size: string) => (
+    <button
+      type="button"
+      onClick={toggleDark}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className={`flex ${size} items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-dice-sky hover:text-dice-accent dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white`}
+    >
+      <Icon name={isDark ? "sun" : "moon"} className="h-[1.1rem] w-[1.1rem]" />
+    </button>
+  );
+
   return (
     <>
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-500 ${
-        scrolled || open
-          ? "border-white/40 bg-white/70 shadow-[0_8px_30px_-12px_rgba(10,61,145,0.25)] dark:border-white/10 dark:bg-dice-ink/70 dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)]"
-          : "border-white/20 bg-white/35 dark:border-white/5 dark:bg-dice-ink/40"
-      }`}
-    >
-      <Container className="flex items-center justify-between py-2">
-        <a href="/" className="flex items-center" aria-label="Dice WiFi home">
-          <img src="/logo.png" alt="Dice WiFi" className="h-12 w-auto sm:h-14 dark:brightness-0 dark:invert" />
-        </a>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ${
+          scrolled || open
+            ? "border-b border-slate-200/70 bg-white/85 backdrop-blur-xl dark:border-white/10 dark:bg-dice-night/85"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <Container className="flex h-[72px] items-center justify-between">
+          <a href="/" className="flex items-center" aria-label="Dice WiFi home">
+            <Logo className="h-11" />
+          </a>
 
-        <nav className="hidden items-center gap-1 rounded-full border border-slate-200/70 bg-white/60 px-1.5 py-1.5 backdrop-blur-md dark:border-white/10 dark:bg-white/5 lg:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition-colors duration-200 hover:bg-dice-blue/8 hover:text-dice-blue dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-dice-cyan"
+          <nav className="hidden items-center gap-9 lg:flex" aria-label="Main">
+            {navLinks.map((link) => {
+              const isActive = active === link.href;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`relative flex h-11 items-center text-[0.9rem] font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:mx-auto after:h-0.5 after:rounded-full after:bg-dice-accent after:transition-all after:duration-300 dark:after:bg-dice-cyan ${
+                    isActive
+                      ? "text-dice-accent after:w-full dark:text-white"
+                      : "text-slate-600 after:w-0 hover:text-dice-navy dark:text-slate-300 dark:hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </nav>
+
+          <div className="hidden items-center gap-2 lg:flex">
+            {themeButton("h-10 w-10")}
+            <Button href="/plans" size="sm">
+              Get Connected
+              <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-1 lg:hidden">
+            {themeButton("h-11 w-11")}
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="flex h-11 w-11 items-center justify-center rounded-full text-dice-navy transition-colors hover:bg-dice-sky dark:text-white dark:hover:bg-white/10"
             >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3 lg:flex">
-          <button
-            type="button"
-            onClick={toggleDark}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200/70 bg-white/60 text-dice-ink backdrop-blur-md transition-colors hover:border-dice-blue/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-dice-cyan/40"
-          >
-            <Icon name={isDark ? "sun" : "moon"} className="h-[1.05rem] w-[1.05rem]" />
-          </button>
-          <Button href="/plans" size="md">
-            Get Connected
-            <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-2 lg:hidden">
-          <button
-            type="button"
-            onClick={toggleDark}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/70 bg-white/70 text-dice-ink backdrop-blur-md transition-colors hover:border-dice-blue/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-dice-cyan/40"
-          >
-            <Icon name={isDark ? "sun" : "moon"} className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/70 bg-white/70 text-dice-ink backdrop-blur-md transition-colors hover:border-dice-blue/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-dice-cyan/40"
-          >
-            <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
-          </button>
-        </div>
-      </Container>
-    </header>
+              <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
+            </button>
+          </div>
+        </Container>
+      </header>
 
       {/* Mobile slide-out menu — rendered as a sibling of <header>, since the
           header's scroll/open state toggles backdrop-blur, and a backdrop-filter
@@ -99,7 +130,7 @@ export function Navbar() {
           (collapsing its height to the header's own height). */}
       <div
         ref={panelRef}
-        className="fixed inset-y-0 right-0 z-40 hidden w-[84%] max-w-sm flex-col gap-8 bg-white/95 px-8 pb-10 pt-28 shadow-2xl backdrop-blur-2xl dark:bg-dice-ink/95 lg:hidden"
+        className="fixed inset-y-0 right-0 z-40 hidden w-[84%] max-w-sm flex-col gap-8 bg-white px-6 pb-10 pt-24 shadow-2xl dark:bg-dice-night lg:hidden"
         style={{ display: "none" }}
       >
         <div className="flex flex-col gap-1">
@@ -108,7 +139,9 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="rounded-2xl px-4 py-3 text-lg font-medium text-dice-ink transition-colors hover:bg-dice-blue/8 hover:text-dice-blue dark:text-white dark:hover:bg-white/10 dark:hover:text-dice-cyan"
+              className={`rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-dice-sky dark:hover:bg-white/10 ${
+                active === link.href ? "text-dice-accent dark:text-dice-cyan" : "text-dice-navy dark:text-white"
+              }`}
             >
               {link.label}
             </a>
@@ -125,7 +158,7 @@ export function Navbar() {
           aria-hidden
           tabIndex={-1}
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-30 bg-dice-ink/30 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-30 bg-dice-navy/30 backdrop-blur-sm lg:hidden"
         />
       )}
     </>

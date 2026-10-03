@@ -1,11 +1,13 @@
 export const pathToSectionId: Record<string, string> = {
   "/": "home",
   "/plans": "plans",
-  "/features": "features",
   "/how-it-works": "how-it-works",
+  "/hotspots": "hotspots",
   "/faq": "faq",
-  "/connect": "connect",
   "/contact": "footer-contact",
+  // Older URLs whose sections were folded into the redesign.
+  "/features": "how-it-works",
+  "/connect": "hotspots",
 };
 
 export function isSectionPath(path: string): boolean {

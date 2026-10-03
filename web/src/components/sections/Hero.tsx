@@ -4,8 +4,8 @@ import { gsap } from "../../lib/gsap";
 import { Container } from "../ui/Container";
 import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
-import { HeroVisual } from "./HeroVisual";
-import { trustIndicators } from "../../data/content";
+import { heroFeatures } from "../../data/content";
+import heroImage from "../../assets/hero-connected.webp";
 
 export function Hero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -14,126 +14,90 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
 
-      // Reduced motion: skip the choreographed entrance — the headline, CTAs,
-      // and trust badges stay visible from the start instead of being gated
-      // behind a timeline that motion-sensitive users have asked to avoid.
+      // Reduced motion: skip the choreographed entrance — everything stays
+      // visible from the start instead of being gated behind a timeline.
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(
-          "[data-hero-line], [data-hero-sub], [data-hero-cta], [data-hero-trust]",
-          { opacity: 1, y: 0, rotateX: 0 }
-        );
+        gsap.set("[data-hero-in], [data-hero-visual]", { opacity: 1, y: 0, scale: 1 });
       });
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
         tl.fromTo(
-          "[data-hero-line]",
-          { opacity: 0, y: 44, rotateX: 35 },
-          { opacity: 1, y: 0, rotateX: 0, duration: 0.85, stagger: 0.12 },
-        )
-          .fromTo(
-            "[data-hero-sub]",
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, duration: 0.7 },
-            "-=0.45",
-          )
-          .fromTo(
-            "[data-hero-cta]",
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
-            "-=0.4",
-          )
-          .fromTo(
-            "[data-hero-trust]",
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
-            "-=0.3",
-          );
+          "[data-hero-in]",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+        ).fromTo(
+          "[data-hero-visual]",
+          { opacity: 0, y: 20, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.9 },
+          0.15,
+        );
       });
     },
     { scope: rootRef },
   );
 
   return (
-    <section
-      id="home"
-      ref={rootRef}
-      className="relative isolate pb-10 pt-20 sm:pb-12 sm:pt-24 lg:pb-16 lg:pt-28"
-    >
-      <Container className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-10 xl:gap-14">
-        {/* Mobile/tablet: lead with the product demo, then explain it.
-            Desktop: natural text-then-visual order in the 2-column grid. */}
-        <div className="order-2 flex flex-col items-center gap-5 text-center sm:gap-7 lg:order-none lg:items-start lg:text-left">
-          <h1 className="font-display max-w-md leading-[1.1] font-semibold text-dice-ink perspective-midrange dark:text-white lg:max-w-xl">
-            <span
-              data-hero-line
-              className="block text-[2.6rem] sm:text-5xl sm:leading-[1.08] lg:text-[3.4rem] xl:text-[3.85rem]"
-            >
-              Dice WiFi
-            </span>
-            <span
-              data-hero-line
-              className="mt-2 block text-xl font-medium text-dice-blue sm:text-2xl lg:text-[1.75rem] dark:text-dice-cyan"
-            >
-              Plans from KSh 10
-            </span>
+    <section id="home" ref={rootRef} className="relative isolate overflow-hidden pb-6 pt-[96px] sm:pb-10 sm:pt-[104px] xl:pb-8 xl:pt-[112px]">
+      {/* Soft blue wash behind the visual, as in the mockup */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-40 -top-24 -z-10 h-[680px] w-[900px] rounded-full bg-[radial-gradient(closest-side,rgba(31,107,255,0.10),transparent)] dark:bg-[radial-gradient(closest-side,rgba(31,107,255,0.18),transparent)]"
+      />
+
+      {/* Phones/tablets: copy → CTAs → image → features, so the product shows on
+          the first screen. Desktop (xl): copy and features stacked on the left,
+          the image spanning both rows on the right. */}
+      <Container className="grid grid-cols-1 items-center gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:grid-rows-[auto_auto] xl:gap-x-4 xl:gap-y-12">
+        <div className="flex flex-col items-start xl:col-start-1 xl:row-start-1 xl:self-end">
+          <h1
+            data-hero-in
+            className="text-balance font-display text-[clamp(2rem,8.6vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.025em] text-dice-navy dark:text-white xl:max-w-[13ch] xl:text-[3.6rem]"
+          >
+            Stay connected wherever you are
           </h1>
 
-          <p
-            data-hero-sub
-            className="max-w-xs text-base leading-relaxed text-slate-600 dark:text-white/65 sm:max-w-sm sm:text-lg lg:max-w-lg"
-          >
-            Connect to any Dice wifi hotspot, choose a plan, pay with M-Pesa,
-            and start browsing. Works on any device with no app or setup
-            required.
+          <p data-hero-in className="mt-5 max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:mt-6 sm:max-w-lg sm:text-[1.05rem]">
+            Fast, reliable and affordable public WiFi hotspots across Kenya. Work, stream, learn and stay in touch —
+            from the places you love.
           </p>
 
-          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
-            <span data-hero-cta className="w-full sm:w-auto">
-              <Button
-                href="/plans"
-                size="lg"
-                className="w-full justify-center sm:w-auto"
-              >
-                View Plans
-                <Icon
-                  name="arrowRight"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Button>
-            </span>
-            <span data-hero-cta className="w-full sm:w-auto">
-              <Button
-                href="/how-it-works"
-                variant="secondary"
-                size="lg"
-                className="w-full justify-center sm:w-auto dark:border-white/35 dark:bg-transparent dark:text-white dark:hover:bg-white/10"
-              >
-                How It Works
-              </Button>
-            </span>
+          <div data-hero-in className="mt-7 flex w-full flex-col gap-3 xs:w-auto xs:flex-row sm:mt-8 sm:gap-4">
+            <Button href="/hotspots" className="w-full xs:w-auto">
+              Find a Hotspot
+              <Icon name="arrowRight" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Button>
+            <Button href="/plans" variant="outline" className="w-full px-9 xs:w-auto">
+              View Plans
+            </Button>
           </div>
-
-          <dl className="mt-2 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 lg:justify-start sm:gap-x-9">
-            {trustIndicators.map((item) => (
-              <div
-                data-hero-trust
-                key={item.label}
-                className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-white/75"
-              >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border border-dice-blue/20 bg-dice-blue/8 text-dice-blue backdrop-blur-md dark:border-white/15 dark:bg-white/8 dark:text-dice-cyan">
-                  <Icon name={item.icon} className="h-4 w-4" />
-                </span>
-                <dt className="font-medium">{item.label}</dt>
-                <dd className="sr-only">Available</dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
-        <div className="order-1 lg:order-none">
-          <HeroVisual />
+        <div data-hero-visual className="relative mx-auto w-full max-w-[640px] xl:col-start-2 xl:row-span-2 xl:row-start-1 xl:-mr-16 xl:max-w-none">
+          <img
+            src={heroImage}
+            width={1200}
+            height={763}
+            fetchPriority="high"
+            alt="The Dice WiFi app showing a 120 Mbps connection, next to a smiling woman using her phone at a Dice WiFi hotspot"
+            className="h-auto w-full select-none"
+            draggable={false}
+          />
         </div>
+
+        <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3 xl:col-start-1 xl:row-start-2 xl:w-[630px] xl:self-start">
+          {heroFeatures.map((item) => (
+            <li data-hero-in key={item.title} className="flex items-start gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-dice-accent shadow-[0_4px_14px_-6px_rgba(15,31,69,0.18)] dark:border-white/10 dark:bg-white/5 dark:text-dice-cyan">
+                <Icon name={item.icon} className="h-[1.1rem] w-[1.1rem]" />
+              </span>
+              <span className="flex flex-col gap-1">
+                <span className="text-sm font-semibold text-dice-navy dark:text-white">{item.title}</span>
+                <span className="text-[0.8rem] leading-snug text-slate-500 dark:text-slate-400">{item.description}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   );

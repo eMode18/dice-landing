@@ -6,7 +6,7 @@ import { isSectionPath, navigateToPath, scrollToPath } from "../lib/routes";
     single scrolling page: intercepts clicks on internal section links
     (pushState instead of a hash jump), handles back/forward, and
     re-settles the initial scroll position once data that can resize
-    sections (plans, portal mockup) has finished loading. */
+    sections (plans) has finished loading. */
 export function SectionRouter() {
   const { loading } = useSiteData();
   const settledOnce = useRef(false);
